@@ -33,8 +33,11 @@ def print_headers(data):
     for row in data:
         headers = ", ".join(row)
         print(f"\nThere are {len(headers)} columns on this file.")
+        
         print("\nHere's a list of all headers:")
-        print(headers.split(","),"\n")
+        for header in headers.split(","):
+            print(f" - {header}")
+        
         return
 
 
