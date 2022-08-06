@@ -8,8 +8,10 @@ def read_csvs(path_to_csv):
      consume a path and open that file
     '''
     csvfile = open(path_to_csv, newline="")
-    data = csv.reader(csvfile, delimiter=" ", quotechar="|")
 
+    print(f"\nFile's encoding: {csvfile.encoding}")
+
+    data = csv.reader(csvfile, delimiter=" ", quotechar="|")
     return data
 
 
