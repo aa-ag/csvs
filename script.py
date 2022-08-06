@@ -1,6 +1,6 @@
 ############------------ IMPORTS ------------##################################
 import csv
-
+import os
 
 ############------------ FUNCTION(S) ------------##############################
 def read_csvs(path_to_csv):
@@ -28,7 +28,10 @@ def print_headers(data):
 
 
 def print_file_encoding(csvfile):
-    print(f"\nFile's encoding: {csvfile.encoding}")
+    # print(f"\nFile's encoding: {csvfile.encoding}")
+
+
+
     return
 
 
@@ -51,5 +54,5 @@ def consume_csv_data(path_to_csv):
 
 ############------------ DRIVER CODE ------------##############################ß
 if __name__ == "__main__":
-    path_to_csv = "constructors.csv"
+    path_to_csv = "example.csv"
     consume_csv_data(path_to_csv)
