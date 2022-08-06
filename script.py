@@ -27,17 +27,25 @@ def print_headers(data):
         return
 
 
+def print_file_encoding(csvfile):
+    print(f"\nFile's encoding: {csvfile.encoding}")
+    return
+
+
 def consume_csv_data(path_to_csv):
     '''
      print each row within a csv
     '''
     csvfile = read_csvs(path_to_csv)
     
+    print_file_encoding(csvfile)
+    
     data = csv.reader(
         csvfile,
         delimiter=" ",
         quotechar="|"
     )
+    
     print_headers(data)
 
 
