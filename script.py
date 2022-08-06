@@ -8,11 +8,7 @@ def read_csvs(path_to_csv):
      consume a path and open that file
     '''
     csvfile = open(path_to_csv, newline="")
-
-    print(f"\nFile's encoding: {csvfile.encoding}")
-
-    data = csv.reader(csvfile, delimiter=" ", quotechar="|")
-    return data
+    return csvfile
     
 
 def print_headers(data):
@@ -35,7 +31,13 @@ def consume_csv_data(path_to_csv):
     '''
      print each row within a csv
     '''
-    data = read_csvs(path_to_csv)
+    csvfile = read_csvs(path_to_csv)
+    
+    data = csv.reader(
+        csvfile,
+        delimiter=" ",
+        quotechar="|"
+    )
     print_headers(data)
 
 
