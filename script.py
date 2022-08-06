@@ -22,21 +22,22 @@ def print_headers(data):
         
         print("\nHere's a list of its headers:")
         for header in headers.split(","):
-            print(f" - {header}")
+            print(f"{header}")
         
+        print("\n")
         return
 
 
 def check_if_utf8_encoded(path_to_csv):
-    # print(f"\nFile's encoding: {csvfile.encoding}")
     command = f"isutf8 {path_to_csv}"
     execute = os.system(command)
 
     if execute:
-        print("\nFile not UTF8-encoded.\n")
-        print(f"Error: {execute}")
+        print("\nFile not UTF8-encoded.")
+        return False
     else:
-        print("File is UTF8-encoded.")
+        print("\nFile is UTF8-encoded.\n")
+        return True
 
 
 def consume_csv_data(path_to_csv):
@@ -45,19 +46,25 @@ def consume_csv_data(path_to_csv):
     '''
     csvfile = read_csvs(path_to_csv)
     
-    check_if_utf8_encoded(path_to_csv)
+    isutf8 = check_if_utf8_encoded(path_to_csv)
     
-    data = csv.reader(
-        csvfile,
-        delimiter=" ",
-        quotechar="|"
-    )
-    
-    print_headers(data)
+    if isutf8:
+        data = csv.reader(
+            csvfile,
+            delimiter=" ",
+            quotechar="|"
+        )
+        
+        print_headers(data)
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    else:
+        print("\nDone.")
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
 
 ############------------ DRIVER CODE ------------##############################ß
 if __name__ == "__main__":
-    # path_to_csv = "constructorss.csv"
-    path_to_csv = "example.csv"
+    path_to_csv = "constructors.csv"
+    # path_to_csv = "example.csv"
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     consume_csv_data(path_to_csv)
