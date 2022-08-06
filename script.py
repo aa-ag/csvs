@@ -13,6 +13,22 @@ def read_csvs(path_to_csv):
 
     data = csv.reader(csvfile, delimiter=" ", quotechar="|")
     return data
+    
+
+def print_headers(data):
+    '''
+     print out how many columns a csv file has
+     and their names
+    '''
+    for row in data:
+        headers = ", ".join(row)
+        print(f"\nFile has {len(headers)} columns.")
+        
+        print("\nHere's a list of its headers:")
+        for header in headers.split(","):
+            print(f" - {header}")
+        
+        return
 
 
 def consume_csv_data():
@@ -23,23 +39,6 @@ def consume_csv_data():
     
     data = read_csvs(path_to_csv)
     print_headers(data)
-    
-
-def print_headers(data):
-    '''
-     print out how many columns a csv file has
-     and their names
-    '''
-    for row in data:
-        headers = ", ".join(row)
-        print(f"\nThere are {len(headers)} columns on this file.")
-        
-        print("\nHere's a list of all headers:")
-        for header in headers.split(","):
-            print(f" - {header}")
-        
-        return
-
 
 ############------------ DRIVER CODE ------------##############################ß
 if __name__ == "__main__":
