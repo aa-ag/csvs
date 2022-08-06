@@ -31,15 +31,15 @@ def print_headers(data):
         return
 
 
-def consume_csv_data():
+def consume_csv_data(path_to_csv):
     '''
      print each row within a csv
     '''
-    path_to_csv = "constructors.csv"
-    
     data = read_csvs(path_to_csv)
     print_headers(data)
 
+
 ############------------ DRIVER CODE ------------##############################ß
 if __name__ == "__main__":
-    consume_csv_data()
+    path_to_csv = "constructors.csv"
+    consume_csv_data(path_to_csv)
