@@ -19,7 +19,7 @@ def read_data_from_reader_object(csvfile):
         )
     return data
 
-    
+
 def check_if_utf8_encoded(path_to_csv):
     '''
      execute linux command `isutf8` 
@@ -38,11 +38,14 @@ def check_if_utf8_encoded(path_to_csv):
     return True
 
 
-def break_down_csv(data):
+def count_columns_and_rows(csv_reader_object):
     '''
      count number of columns and rows,
      and make both numbers human-readable
     '''
+
+    data = read_data_from_reader_object(csv_reader_object)
+    
     column_count = 0
     row_count = 0
     
@@ -57,7 +60,7 @@ def break_down_csv(data):
     column_count = "{:,}".format(column_count)
     row_count = "{:,}".format(row_count - 1)
 
-    return column_count, row_count, headers
+    return column_count, row_count
 
 
 def analyse_csv(path_to_csv):
@@ -71,27 +74,31 @@ def analyse_csv(path_to_csv):
     '''
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
-    csvfile = generate_reader_object(path_to_csv)
-    
-    data = read_data_from_reader_object(csvfile)
+    csv_reader_object = generate_reader_object(path_to_csv)
 
-    isutf8 = check_if_utf8_encoded(path_to_csv)
+    parts = count_columns_and_rows(csv_reader_object)
+    print(f"File has {parts[0]} columns.👉")
+    print(f"👇 And {parts[1]} rows.")
 
-    if isutf8:
-        print("\n✅ File is UTF8-encoded.\n")
+
+
+    # isutf8 = check_if_utf8_encoded(path_to_csv)
+
+    # if isutf8:
+    #     print("\n✅ File is UTF8-encoded.\n")
         
-        parts = break_down_csv(data)
-        print(f"File has {parts[0]} columns.👉")
-        print(f"👇 And {parts[1]} rows.")
+    #     parts = break_down_csv(data)
+    #     print(f"File has {parts[0]} columns.👉")
+    #     print(f"👇 And {parts[1]} rows.")
         
-        print("\nHere's a list of its headers:")
-        print(f"👆 {parts[2]}")
+    #     print("\nHere's a list of its headers:")
+    #     print(f"👆 {parts[2]}")
         
-        print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        return True
-    else:
-        print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        return False
+    #     print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    #     return True
+    # else:
+    #     print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    #     return False
 
 
 def make_sample(path_to_csv):
