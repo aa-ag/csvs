@@ -13,7 +13,8 @@ def generate_reader_object(path_to_csv):
 
 def read_data_from_reader_object(csv_reader_object):
     '''
-     execute csv's reader function to "read" it
+     execute csv's reader function to "read" the data 
+     from the passed file
     '''
     data = csv.reader(
             csv_reader_object,
@@ -31,12 +32,15 @@ def check_if_utf8_encoded(path_to_csv):
      execute `uchardet` to detect encoding
     '''
     utf8_check_command = f"isutf8 {path_to_csv}"
+    
     execute = os.system(utf8_check_command)
 
     if execute:
         print("\n⛔ File not UTF8-encoded.\n")
         print("This file's encoding:")
+        
         os.system(f"uchardet {path_to_csv}")
+        
         return False
     return True
 
@@ -94,36 +98,46 @@ def analyse_csv(path_to_csv):
 
     csv_reader_object = generate_reader_object(path_to_csv)
 
-    parts = count_columns_and_rows(csv_reader_object)
-    print(f"File has {parts[0]} columns.👉")
-    print(f"👇 And {parts[1]} rows.")
+    isutf8 = check_if_utf8_encoded(path_to_csv)
 
-
-    headers = list_headers(path_to_csv)
-    print("\nHere's a list of its headers:")
-    print(f"👆 {headers}")
-
-    # isutf8 = check_if_utf8_encoded(path_to_csv)
-
-    # if isutf8:
-    #     print("\n✅ File is UTF8-encoded.\n")
+    if isutf8:
+        print("\n✅ File is UTF8-encoded.\n")
         
-    #     parts = break_down_csv(data)
-    #     print(f"File has {parts[0]} columns.👉")
-    #     print(f"👇 And {parts[1]} rows.")
-        
-    #     print("\nHere's a list of its headers:")
-    #     print(f"👆 {parts[2]}")
-        
-    #     print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    #     return True
-    # else:
-    #     print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    #     return False
+        counts = count_columns_and_rows(csv_reader_object)
+        print(f"👉 File has {counts[0]} columns.")
+        print(f"And {counts[1]} rows.👇")
 
 
-def make_sample(path_to_csv):
-    pass
+        headers_list = list_headers(path_to_csv)
+        print("\nHere's a list of its headers:")
+        print(f"👆{headers_list}")
+    
+        return True
+    
+    print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    return False
+
+
+def make_sample(path_to_csv, sample_size):
+    csv_reader_object = generate_reader_object(path_to_csv)
+
+    data = read_data_from_reader_object(csv_reader_object)
+
+    with open(
+            f"{sample_size}_sample_rows.csv", "w", newline=""
+        ) as csvfile:
+        
+        csv_writer = csv.writer(csvfile)
+
+        i = 0
+        for row in data:
+            if i < sample_size + 1:
+                csv_writer.writerow(
+                    row
+                )
+                i += 1
+
+
 
 
 ############------------ DRIVER CODE ------------##############################ß
@@ -133,5 +147,7 @@ if __name__ == "__main__":
 
     analysis = analyse_csv(path_to_csv)
     
+    sample_size = 25
+
     if analysis:
-        make_sample(path_to_csv)
+        make_sample(path_to_csv, sample_size)
