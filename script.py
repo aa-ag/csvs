@@ -11,9 +11,9 @@ def generate_reader_object(path_to_csv):
     return csvfile
 
 
-def read_data_from_reader_object(csvfile):
+def read_data_from_reader_object(csv_reader_object):
     data = csv.reader(
-            csvfile,
+            csv_reader_object,
             delimiter=" ",
             quotechar="|"
         )
@@ -44,15 +44,17 @@ def count_columns_and_rows(csv_reader_object):
      and make both numbers human-readable
     '''
 
-    data = read_data_from_reader_object(csv_reader_object)
+    data = read_data_from_reader_object(
+        csv_reader_object
+    )
     
     column_count = 0
     row_count = 0
     
     for row in data:
         if column_count == 0:
-            headers = ", ".join(row)
-            column_count = len(headers)
+            columns = ", ".join(row)
+            column_count = len(columns)
             row_count += 1
         else:
             row_count += 1
@@ -61,6 +63,14 @@ def count_columns_and_rows(csv_reader_object):
     row_count = "{:,}".format(row_count - 1)
 
     return column_count, row_count
+
+
+def list_headers(path_to_csv):
+    with open(path_to_csv) as csv_file:
+        dict_reader = csv.DictReader(csv_file)
+
+        headers = dict(list(dict_reader)[0]).keys()
+        return list(headers)
 
 
 def analyse_csv(path_to_csv):
@@ -81,6 +91,9 @@ def analyse_csv(path_to_csv):
     print(f"👇 And {parts[1]} rows.")
 
 
+    headers = list_headers(path_to_csv)
+    print("\nHere's a list of its headers:")
+    print(f"👆 {headers}")
 
     # isutf8 = check_if_utf8_encoded(path_to_csv)
 
