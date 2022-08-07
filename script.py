@@ -19,7 +19,6 @@ def print_headers(data):
     '''
     for row in data:
         headers = ", ".join(row)
-        print(f"File has {len(headers)} columns.")
         
         print("\nHere's a list of its headers:")
         for header in headers.split(","):
@@ -43,8 +42,12 @@ def check_if_utf8_encoded(path_to_csv):
 
 def print_row_count(data):
     count = 0
-    for row in data:
-        count += 1
+    for i, row in enumerate(data):
+        if i == 0:
+            columns = ", ".join(row)
+            print(f"File has {len(columns)} columns.")
+        else:
+            count += 1
 
     print(f"File has {count - 1} rows.")
 
@@ -59,7 +62,7 @@ def consume_csv_data(path_to_csv):
        - its row count
     '''
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    
+
     csvfile = read_csvs(path_to_csv)
     
     isutf8 = check_if_utf8_encoded(path_to_csv)
