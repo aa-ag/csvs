@@ -16,7 +16,9 @@ def read_csvs(path_to_csv):
 def check_if_utf8_encoded(path_to_csv):
     '''
      execute linux command `isutf8` 
-     from the `moreutils` module
+     from the `moreutils` module to check if file is
+     utf8 encoded, and if an error is raised
+     execute `uchardet` to detect encoding
     '''
     utf8_check_command = f"isutf8 {path_to_csv}"
     execute = os.system(utf8_check_command)
@@ -49,15 +51,6 @@ def break_down_csv(data):
     row_count = "{:,}".format(row_count - 1)
 
     return column_count, row_count, headers
-
-
-def get_headers(headers):
-    '''
-     print out how many columns a csv file has
-     and their names
-    '''
-    for header in headers.split(','):
-        print(header)
 
 
 def analyse_csv(path_to_csv):
