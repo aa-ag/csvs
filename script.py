@@ -58,6 +58,8 @@ def consume_csv_data(path_to_csv):
        - how many columns it has,
        - its row count
     '''
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    
     csvfile = read_csvs(path_to_csv)
     
     isutf8 = check_if_utf8_encoded(path_to_csv)
@@ -80,5 +82,4 @@ def consume_csv_data(path_to_csv):
 if __name__ == "__main__":
     path_to_csv = "constructors.csv"
     # path_to_csv = "example.csv"
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     consume_csv_data(path_to_csv)
