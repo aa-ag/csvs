@@ -51,7 +51,12 @@ def print_row_count(data):
 
 def consume_csv_data(path_to_csv):
     '''
-     print each row within a csv
+     read a csv file using it's path,
+     and call helper functions to check:
+       - if the csv is utf8 encoded,
+       - what its headers are,
+       - how many columns it has,
+       - its row count
     '''
     csvfile = read_csvs(path_to_csv)
     
