@@ -3,7 +3,7 @@ import csv
 import os
 
 ############------------ FUNCTION(S) ------------##############################
-def read_csvs(path_to_csv):
+def generate_reader_object(path_to_csv):
     '''
      consume a path and open that file
     '''
@@ -11,6 +11,15 @@ def read_csvs(path_to_csv):
     return csvfile
 
 
+def read_data_from_reader_object(csvfile):
+    data = csv.reader(
+            csvfile,
+            delimiter=" ",
+            quotechar="|"
+        )
+    return data
+
+    
 def check_if_utf8_encoded(path_to_csv):
     '''
      execute linux command `isutf8` 
@@ -62,18 +71,14 @@ def analyse_csv(path_to_csv):
     '''
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
-    csvfile = read_csvs(path_to_csv)
+    csvfile = generate_reader_object(path_to_csv)
     
+    data = read_data_from_reader_object(csvfile)
+
     isutf8 = check_if_utf8_encoded(path_to_csv)
-    
+
     if isutf8:
         print("\n✅ File is UTF8-encoded.\n")
-
-        data = csv.reader(
-            csvfile,
-            delimiter=" ",
-            quotechar="|"
-        )
         
         parts = break_down_csv(data)
         print(f"File has {parts[0]} columns.👉")
@@ -83,12 +88,22 @@ def analyse_csv(path_to_csv):
         print(f"👆 {parts[2]}")
         
         print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        return True
     else:
         print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        return False
+
+
+def make_sample(path_to_csv):
+    pass
 
 
 ############------------ DRIVER CODE ------------##############################ß
 if __name__ == "__main__":
-    # path_to_csv = "constructors.csv"
-    path_to_csv = "example.csv"
-    analyse_csv(path_to_csv)
+    path_to_csv = "constructors.csv"
+    # path_to_csv = "example.csv"
+
+    analysis = analyse_csv(path_to_csv)
+    
+    if analysis:
+        make_sample(path_to_csv)
