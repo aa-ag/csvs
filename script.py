@@ -14,6 +14,10 @@ def read_csvs(path_to_csv):
 
 
 def check_if_utf8_encoded(path_to_csv):
+    '''
+     execute linux command `isutf8` 
+     from the `moreutils` module
+    '''
     command = f"isutf8 {path_to_csv}"
     execute = os.system(command)
 
@@ -23,6 +27,10 @@ def check_if_utf8_encoded(path_to_csv):
 
 
 def get_row_and_column_count(data):
+    '''
+     count number of columns and rows,
+     and make both numbers human-readable
+    '''
     column_count = 0
     row_count = 0
     
