@@ -70,7 +70,12 @@ def count_columns_and_rows(csv_reader_object):
     column_count = "{:,}".format(column_count)
     row_count = "{:,}".format(row_count - 1)
 
-    return column_count, row_count
+    counts = {
+        "columns": column_count,
+        "rows": row_count
+    }
+
+    return counts
 
 
 def list_headers(path_to_csv):
@@ -105,8 +110,8 @@ def analyse_csv(path_to_csv):
         print("\n✅ File is UTF8-encoded.\n")
         
         counts = count_columns_and_rows(csv_reader_object)
-        print(f"👉 File has {counts[0]} columns.")
-        print(f"And {counts[1]} rows.👇")
+        print(f"👉 File has {counts['columns']} columns.")
+        print(f"And {counts['rows']} rows.👇")
 
 
         headers_list = list_headers(path_to_csv)
@@ -122,8 +127,9 @@ def analyse_csv(path_to_csv):
 def make_sample(path_to_csv, sample_size, sample_indexes):
     '''
      open and read a csv file, 
-     and make a sample csv that gets either a specific set of indexes/rows 
-     or an N number of rows at random indexes
+     and make a sample csv that gets either 
+     (i) a specific set of indexes/rows 
+     or (ii) an N number of rows at random indexes
     '''
     with open(
             f"sample.csv", "w", newline=""
@@ -131,7 +137,7 @@ def make_sample(path_to_csv, sample_size, sample_indexes):
 
         csv_reader_object = generate_reader_object(path_to_csv)
         counts = count_columns_and_rows(csv_reader_object)
-        row_count = int(counts[1].replace(',', ''))
+        row_count = int(counts['rows'].replace(',', ''))
 
         if sample_indexes:
             target = sample_indexes
@@ -151,9 +157,6 @@ def make_sample(path_to_csv, sample_size, sample_indexes):
         for i, row in enumerate(data):
             if i in target:
                 csv_writer.writerow(row)
-    
-
-
 
 
 
