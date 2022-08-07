@@ -1,5 +1,6 @@
 ############------------ IMPORTS ------------##################################
 import csv
+import enum
 import os
 
 ############------------ FUNCTION(S) ------------##############################
@@ -118,7 +119,7 @@ def analyse_csv(path_to_csv):
     return False
 
 
-def make_sample(path_to_csv, sample_size):
+def make_sample(path_to_csv, sample_size, sample_indexes):
     '''
      open and read a csv file, 
      and make a sample of its first N rows
@@ -128,18 +129,24 @@ def make_sample(path_to_csv, sample_size):
     data = read_data_from_reader_object(csv_reader_object)
 
     with open(
-            f"{sample_size}_sample_rows.csv", "w", newline=""
+            f"sample.csv", "w", newline=""
         ) as csvfile:
         
         csv_writer = csv.writer(csvfile)
 
-        i = 0
-        for row in data:
-            if i < sample_size + 1:
-                csv_writer.writerow(
-                    row
-                )
-                i += 1
+        if sample_indexes:
+            for i, row in enumerate(data):
+                if i in sample_indexes:
+                    csv_writer.writerow(row)
+
+        else:
+            i = 0
+            for row in data:
+                while i < sample_size + 1:
+                    csv_writer.writerow(
+                        row
+                    )
+                    i += 1
 
 
 
@@ -152,6 +159,7 @@ if __name__ == "__main__":
     analysis = analyse_csv(path_to_csv)
     
     sample_size = 25
+    sample_indexes = [3, 55, 649, 10230, 10231, 10232]
 
     if analysis:
-        make_sample(path_to_csv, sample_size)
+        make_sample(path_to_csv, sample_size, sample_indexes)
