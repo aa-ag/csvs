@@ -34,7 +34,10 @@ def get_row_and_column_count(data):
         else:
             row_count += 1
     
-    return column_count, row_count - 1
+    column_count = "{:,}".format(column_count)
+    row_count = "{:,}".format(row_count - 1)
+
+    return column_count, row_count
 
 
 def get_headers(data):
@@ -62,7 +65,7 @@ def analyse_csv(path_to_csv):
     isutf8 = check_if_utf8_encoded(path_to_csv)
     
     if isutf8:
-        print("\nFile not UTF8-encoded.\n")
+        print("\nFile is UTF8-encoded.\n")
 
         data = csv.reader(
             csvfile,
@@ -80,7 +83,7 @@ def analyse_csv(path_to_csv):
         
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     else:
-        print("\nFile is UTF8-encoded.\n")
+        print("\nFile not UTF8-encoded.\n")
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
 
