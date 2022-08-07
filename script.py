@@ -18,10 +18,13 @@ def check_if_utf8_encoded(path_to_csv):
      execute linux command `isutf8` 
      from the `moreutils` module
     '''
-    command = f"isutf8 {path_to_csv}"
-    execute = os.system(command)
+    utf8_check_command = f"isutf8 {path_to_csv}"
+    execute = os.system(utf8_check_command)
 
     if execute:
+        print("\n⛔ File not UTF8-encoded.\n")
+        print("This file's encoding:")
+        os.system(f"uchardet {path_to_csv}")
         return False
     return True
 
@@ -90,12 +93,11 @@ def analyse_csv(path_to_csv):
         
         print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     else:
-        print("\n⛔ File not UTF8-encoded.\n")
-        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
 
 ############------------ DRIVER CODE ------------##############################ß
 if __name__ == "__main__":
-    path_to_csv = "constructors.csv"
-    # path_to_csv = "example.csv"
+    # path_to_csv = "constructors.csv"
+    path_to_csv = "example.csv"
     analyse_csv(path_to_csv)
