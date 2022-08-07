@@ -25,8 +25,9 @@ def check_if_utf8_encoded(path_to_csv):
 def get_row_and_column_count(data):
     column_count = 0
     row_count = 0
+    
     for row in data:
-        if count == 0:
+        if column_count == 0:
             columns = ", ".join(row)
             column_count = len(columns)
             row_count += 1
@@ -42,12 +43,10 @@ def get_headers(data):
      and their names
     '''
     for row in data:
-        headers = ", ".join(row)
-
-        return headers.split(",")
+        print(row)
 
 
-def consume_csv_data(path_to_csv):
+def analyse_csv(path_to_csv):
     '''
      read a csv file using it's path,
      and call helper functions to check:
@@ -74,7 +73,7 @@ def consume_csv_data(path_to_csv):
         counts = get_row_and_column_count(data)
         print(f"File has {counts[0]} columns.")
         print(f"And {counts[1]} rows.")
-
+        
         headers = get_headers(data)
         print("\nHere's a list of its headers:")
         print(headers)
@@ -89,4 +88,4 @@ def consume_csv_data(path_to_csv):
 if __name__ == "__main__":
     path_to_csv = "constructors.csv"
     # path_to_csv = "example.csv"
-    consume_csv_data(path_to_csv)
+    analyse_csv(path_to_csv)
