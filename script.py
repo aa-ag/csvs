@@ -119,6 +119,10 @@ def analyse_csv(path_to_csv):
 
 
 def make_sample(path_to_csv, sample_size):
+    '''
+     open and read a csv file, 
+     and make a sample of its first N rows
+    '''
     csv_reader_object = generate_reader_object(path_to_csv)
 
     data = read_data_from_reader_object(csv_reader_object)
