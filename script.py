@@ -1,6 +1,6 @@
 ############------------ IMPORTS ------------##################################
 import csv
-import enum
+import random
 import os
 
 ############------------ FUNCTION(S) ------------##############################
@@ -124,29 +124,34 @@ def make_sample(path_to_csv, sample_size, sample_indexes):
      open and read a csv file, 
      and make a sample of its first N rows
     '''
-    csv_reader_object = generate_reader_object(path_to_csv)
-
-    data = read_data_from_reader_object(csv_reader_object)
-
     with open(
             f"sample.csv", "w", newline=""
         ) as csvfile:
-        
-        csv_writer = csv.writer(csvfile)
+
+        csv_reader_object = generate_reader_object(path_to_csv)
+        counts = count_columns_and_rows(csv_reader_object)
+        row_count = int(counts[1].replace(',', ''))
 
         if sample_indexes:
-            for i, row in enumerate(data):
-                if i in sample_indexes:
-                    csv_writer.writerow(row)
-
+            target = sample_indexes
         else:
-            i = 0
-            for row in data:
-                while i < sample_size + 1:
-                    csv_writer.writerow(
-                        row
-                    )
-                    i += 1
+            random_indexes = random.sample(
+                range(1, row_count), 
+                sample_size
+            )
+
+            target = random_indexes
+
+        csv_reader_object = generate_reader_object(path_to_csv)
+        data = read_data_from_reader_object(csv_reader_object)
+
+        csv_writer = csv.writer(csvfile)
+        
+        for i, row in enumerate(data):
+            if i in target:
+                csv_writer.writerow(row)
+    
+
 
 
 
@@ -159,7 +164,9 @@ if __name__ == "__main__":
     analysis = analyse_csv(path_to_csv)
     
     sample_size = 25
-    sample_indexes = [3, 55, 649, 10230, 10231, 10232]
+    # sample_indexes = [11201, 1822, 9787, 9444, 5146, 9383, 9130, 11669, 7732, 8144, 435, 5467, 2178, 7099, 781, 12023, 8180, 3198, 238, 7466, 5073, 11742, 2153, 11062, 2689]
+    sample_indexes = []
+
 
     if analysis:
         make_sample(path_to_csv, sample_size, sample_indexes)
