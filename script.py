@@ -122,7 +122,8 @@ def analyse_csv(path_to_csv):
 def make_sample(path_to_csv, sample_size, sample_indexes):
     '''
      open and read a csv file, 
-     and make a sample of its first N rows
+     and make a sample csv that gets either a specific set of indexes/rows 
+     or an N number of rows at random indexes
     '''
     with open(
             f"sample.csv", "w", newline=""
