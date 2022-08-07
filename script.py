@@ -1,5 +1,6 @@
 ############------------ IMPORTS ------------##################################
 import csv
+from itertools import count
 import os
 
 ############------------ FUNCTION(S) ------------##############################
@@ -18,7 +19,7 @@ def print_headers(data):
     '''
     for row in data:
         headers = ", ".join(row)
-        print(f"\nFile has {len(headers)} columns.")
+        print(f"File has {len(headers)} columns.")
         
         print("\nHere's a list of its headers:")
         for header in headers.split(","):
@@ -33,11 +34,19 @@ def check_if_utf8_encoded(path_to_csv):
     execute = os.system(command)
 
     if execute:
-        print("\nFile not UTF8-encoded.")
+        print("\nFile not UTF8-encoded.\n")
         return False
     else:
         print("\nFile is UTF8-encoded.\n")
         return True
+
+
+def print_row_count(data):
+    count = 0
+    for row in data:
+        count += 1
+
+    print(f"File has {count - 1} rows.")
 
 
 def consume_csv_data(path_to_csv):
@@ -55,10 +64,10 @@ def consume_csv_data(path_to_csv):
             quotechar="|"
         )
         
-        print_headers(data)
+        # print_headers(data)
+        print_row_count(data)
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     else:
-        print("\nDone.")
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
 
