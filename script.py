@@ -1,5 +1,6 @@
 ############------------ IMPORTS ------------##################################
 import csv
+from email import header
 from itertools import count
 import os
 
@@ -10,22 +11,6 @@ def read_csvs(path_to_csv):
     '''
     csvfile = open(path_to_csv, newline="")
     return csvfile
-    
-
-def print_headers(data):
-    '''
-     print out how many columns a csv file has
-     and their names
-    '''
-    for row in data:
-        headers = ", ".join(row)
-        
-        print("\nHere's a list of its headers:")
-        for header in headers.split(","):
-            print(f"{header}")
-        
-        print("\n")
-        return
 
 
 def check_if_utf8_encoded(path_to_csv):
@@ -33,23 +18,33 @@ def check_if_utf8_encoded(path_to_csv):
     execute = os.system(command)
 
     if execute:
-        print("\nFile not UTF8-encoded.\n")
         return False
-    else:
-        print("\nFile is UTF8-encoded.\n")
-        return True
+    return True
 
 
-def print_row_count(data):
-    count = 0
-    for i, row in enumerate(data):
-        if i == 0:
+def get_row_and_column_count(data):
+    column_count = 0
+    row_count = 0
+    for row in data:
+        if count == 0:
             columns = ", ".join(row)
-            print(f"File has {len(columns)} columns.")
+            column_count = len(columns)
+            row_count += 1
         else:
-            count += 1
+            row_count += 1
+    
+    return column_count, row_count - 1
 
-    print(f"File has {count - 1} rows.")
+
+def get_headers(data):
+    '''
+     print out how many columns a csv file has
+     and their names
+    '''
+    for row in data:
+        headers = ", ".join(row)
+
+        return headers.split(",")
 
 
 def consume_csv_data(path_to_csv):
@@ -68,16 +63,25 @@ def consume_csv_data(path_to_csv):
     isutf8 = check_if_utf8_encoded(path_to_csv)
     
     if isutf8:
+        print("\nFile not UTF8-encoded.\n")
+
         data = csv.reader(
             csvfile,
             delimiter=" ",
             quotechar="|"
         )
         
-        # print_headers(data)
-        print_row_count(data)
+        counts = get_row_and_column_count(data)
+        print(f"File has {counts[0]} columns.")
+        print(f"And {counts[1]} rows.")
+
+        headers = get_headers(data)
+        print("\nHere's a list of its headers:")
+        print(headers)
+        
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     else:
+        print("\nFile is UTF8-encoded.\n")
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
 
