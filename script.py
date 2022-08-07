@@ -26,7 +26,7 @@ def check_if_utf8_encoded(path_to_csv):
     return True
 
 
-def get_row_and_column_count(data):
+def break_down_csv(data):
     '''
      count number of columns and rows,
      and make both numbers human-readable
@@ -73,7 +73,7 @@ def analyse_csv(path_to_csv):
     isutf8 = check_if_utf8_encoded(path_to_csv)
     
     if isutf8:
-        print("\nFile is UTF8-encoded.\n")
+        print("\n✅ File is UTF8-encoded.\n")
 
         data = csv.reader(
             csvfile,
@@ -81,16 +81,16 @@ def analyse_csv(path_to_csv):
             quotechar="|"
         )
         
-        counts = get_row_and_column_count(data)
-        print(f"File has {counts[0]} columns.")
-        print(f"And {counts[1]} rows.")
+        parts = break_down_csv(data)
+        print(f"File has {parts[0]} columns.👉")
+        print(f"👇 And {parts[1]} rows.")
         
         print("\nHere's a list of its headers:")
-        print(counts[2])
+        print(f"👆 {parts[2]}")
         
         print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     else:
-        print("\nFile not UTF8-encoded.\n")
+        print("\n⛔ File not UTF8-encoded.\n")
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
 
