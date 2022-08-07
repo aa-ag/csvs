@@ -12,6 +12,9 @@ def generate_reader_object(path_to_csv):
 
 
 def read_data_from_reader_object(csv_reader_object):
+    '''
+     execute csv's reader function to "read" it
+    '''
     data = csv.reader(
             csv_reader_object,
             delimiter=" ",
@@ -66,6 +69,11 @@ def count_columns_and_rows(csv_reader_object):
 
 
 def list_headers(path_to_csv):
+    '''
+     open the csv from its path and
+     return it's headers 
+     (first column's keys in a DictRead object)
+    '''
     with open(path_to_csv) as csv_file:
         dict_reader = csv.DictReader(csv_file)
 
