@@ -36,8 +36,8 @@ def get_row_and_column_count(data):
     
     for row in data:
         if column_count == 0:
-            columns = ", ".join(row)
-            column_count = len(columns)
+            headers = ", ".join(row)
+            column_count = len(headers)
             row_count += 1
         else:
             row_count += 1
@@ -45,16 +45,16 @@ def get_row_and_column_count(data):
     column_count = "{:,}".format(column_count)
     row_count = "{:,}".format(row_count - 1)
 
-    return column_count, row_count
+    return column_count, row_count, headers
 
 
-def get_headers(data):
+def get_headers(headers):
     '''
      print out how many columns a csv file has
      and their names
     '''
-    for row in data:
-        print(row)
+    for header in headers.split(','):
+        print(header)
 
 
 def analyse_csv(path_to_csv):
@@ -85,11 +85,10 @@ def analyse_csv(path_to_csv):
         print(f"File has {counts[0]} columns.")
         print(f"And {counts[1]} rows.")
         
-        headers = get_headers(data)
         print("\nHere's a list of its headers:")
-        print(headers)
+        print(counts[2])
         
-        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     else:
         print("\nFile not UTF8-encoded.\n")
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
