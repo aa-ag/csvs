@@ -1,7 +1,5 @@
 ############------------ IMPORTS ------------##################################
 import csv
-from email import header
-from itertools import count
 import os
 
 ############------------ FUNCTION(S) ------------##############################
