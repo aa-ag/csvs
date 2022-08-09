@@ -8,6 +8,8 @@ csvenv/*
 # Settings or config
 settings
 settings.py
+spa/spa/settings.py
+spa/spa/settings
 
 config
 config.py
