@@ -2,8 +2,8 @@
 *.csv
 
 # virtual environment
-env
-env/*
+csvenv
+csvenv/*
 
 # Settings or config
 settings
