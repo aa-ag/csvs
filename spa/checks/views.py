@@ -1,5 +1,6 @@
 ############------------ IMPORTS ------------##################################
 ### relative
+from asyncore import read
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
@@ -29,13 +30,13 @@ def report(request):
             
             reader = generate_reader_from_file(in_memory_file)
 
-            counts = count_columns_and_rows(reader)
+            metadata = extract_csv_metadata(reader)
 
             context = {
                 "isutf8_encoded": isutf8_encoded,
-                "columns": counts["columns"],
-                "rows": counts["rows"],
-                # "headers": "headers",
+                "columns": metadata["columns"],
+                "rows": metadata["rows"],
+                "headers": metadata["headers"],
                 # "sample": "sample"
             }
         else:
@@ -76,14 +77,14 @@ def detect_encoding(reader):
 
 
 
-def count_columns_and_rows(data):
-    
+def extract_csv_metadata(data):
     column_count = 0
     row_count = 0
     
     for row in data:
         if column_count == 0:
             columns = ", ".join(row)
+            headers = columns
             column_count = len(columns)
             row_count += 1
         else:
@@ -94,15 +95,17 @@ def count_columns_and_rows(data):
 
     counts = {
         "columns": column_count,
-        "rows": row_count
+        "rows": row_count,
+        "headers": headers,
     }
 
     return counts
 
 
-def list_headers(f):
-    headers = dict(list(f)[0]).keys()
-    return list(headers)
+def list_headers(reader):
+    for row in reader:
+        print(row)
+        return list(row)
 
 
 
