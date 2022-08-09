@@ -17,6 +17,11 @@ def home(request):
     return render(request, 'checks/index.html', context=context)
 
 
+def report(request):
+    context = dict()
+    return render(request, 'checks/report.html', context=context)
+
+
 def generate_reader_object(path_to_csv):
     '''
      consume a path and open that file
