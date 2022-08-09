@@ -1,16 +1,14 @@
 ############------------ IMPORTS ------------##################################
 ### relative
-from asyncore import read
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
 ### external
 import csv
-import random
 import io
 import chardet
 
-############------------ FUNCTION(S) ------------##############################
+############------------ VIEW(S) ------------##############################
 def home(request):
     return render(request, 'checks/index.html')
 
@@ -37,7 +35,6 @@ def report(request):
                 "columns": metadata["columns"],
                 "rows": metadata["rows"],
                 "headers": metadata["headers"],
-                # "sample": "sample"
             }
         else:
             encoding = detect_encoding(in_memory_file)
@@ -53,6 +50,7 @@ def report(request):
         )
 
 
+############------------ HELPER FUNCTION(S) ------------##############################
 def is_utf8_encoded(f):
     try:
         f.decode('utf-8')
@@ -76,8 +74,8 @@ def detect_encoding(reader):
     return match["encoding"]
 
 
-
 def extract_csv_metadata(data):
+    headers = 0
     column_count = 0
     row_count = 0
     
@@ -93,13 +91,13 @@ def extract_csv_metadata(data):
     column_count = "{:,}".format(column_count)
     row_count = "{:,}".format(row_count - 1)
 
-    counts = {
+    metadata = {
         "columns": column_count,
         "rows": row_count,
         "headers": headers,
     }
 
-    return counts
+    return metadata
 
 
 def list_headers(reader):
@@ -108,54 +106,8 @@ def list_headers(reader):
         return list(row)
 
 
-
-def make_sample(path_to_csv, sample_size, sample_indexes):
+def make_sample():
     '''
-     open and read a csv file, 
-     and make a sample csv that gets either 
-     (i) a specific set of indexes/rows 
-     or (ii) an N number of rows at random indexes
+     https://docs.djangoproject.com/en/4.1/howto/outputting-csv/
     '''
-    with open(
-            f"sample.csv", "w", newline=""
-        ) as csvfile:
-
-        csv_reader_object = generate_reader_object(path_to_csv)
-        counts = count_columns_and_rows(csv_reader_object)
-        row_count = int(counts['rows'].replace(',', ''))
-
-        if sample_indexes:
-            target = sample_indexes
-        else:
-            random_indexes = random.sample(
-                range(1, row_count), 
-                sample_size
-            )
-
-            target = random_indexes
-
-        csv_reader_object = generate_reader_object(path_to_csv)
-        data = read_data_from_reader_object(csv_reader_object)
-
-        csv_writer = csv.writer(csvfile)
-        
-        for i, row in enumerate(data):
-            if i in target:
-                csv_writer.writerow(row)
-
-
-
-############------------ DRIVER CODE ------------##############################ß
-if __name__ == "__main__":
-    path_to_csv = "constructors.csv"
-    # path_to_csv = "example.csv"
-
-    analysis = analyse_csv(path_to_csv)
-    
-    sample_size = 25
-    # sample_indexes = [11201, 1822, 9787, 9444, 5146, 9383, 9130, 11669, 7732, 8144, 435, 5467, 2178, 7099, 781, 12023, 8180, 3198, 238, 7466, 5073, 11742, 2153, 11062, 2689]
-    sample_indexes = []
-
-
-    if analysis:
-        make_sample(path_to_csv, sample_size, sample_indexes)
+    pass
