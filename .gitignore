@@ -1,6 +1,10 @@
 # files/inputs
 *.csv
 
+# virtual environment
+env
+env/*
+
 # Settings or config
 settings
 settings.py
