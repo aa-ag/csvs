@@ -2,7 +2,6 @@
 ### relative
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .forms import UploadFileForm
 from django.views.decorators.csrf import csrf_exempt
 
 ### external
@@ -13,30 +12,38 @@ import io
 
 ############------------ FUNCTION(S) ------------##############################
 def home(request):
-    context = dict()
-    context['form'] = UploadFileForm
-    return render(request, 'checks/index.html', context=context)
+    return render(request, 'checks/index.html')
 
 
 def report(request):
     if request.method == 'POST':
+        
         uploaded_file = request.FILES['file']
         
-        f = uploaded_file.read()
+        in_memory_file = uploaded_file.read()
 
-        isutf8_encoded = is_utf8_encoded(f)
-        print(isutf8_encoded)
-        # reader = csv.DictReader(io.StringIO(f))
+        isutf8_encoded = is_utf8_encoded(in_memory_file)
 
-        # data = [line for line in reader]
+        if isutf8_encoded:
+            
+            in_memory_file = in_memory_file.decode('utf-8')
+            
+            reader = generate_reader_from_file(in_memory_file)
 
-        context = {
-            "isutf8_encoded": isutf8_encoded,
-            # "encoding": "encoding",
-            # "counts": data[0],
-            # "headers": "headers",
-            # "sample": "sample"
-        }
+            counts = count_columns_and_rows(reader)
+
+            context = {
+                "isutf8_encoded": isutf8_encoded,
+                "columns": counts["columns"],
+                "rows": counts["rows"],
+                "encoding": "encoding",
+                # "headers": "headers",
+                # "sample": "sample"
+            }
+        else:
+            context = {
+                "isutf8_encoded": isutf8_encoded,
+            }
         return render(request, 'checks/report.html', context=context)
 
 
@@ -47,25 +54,15 @@ def is_utf8_encoded(f):
     except:
         return False
 
-def generate_reader_object(path_to_csv):
-    '''
-     consume a path and open that file
-    '''
-    csvfile = open(path_to_csv, newline="")
-    return csvfile
 
+def generate_reader_from_file(in_memory_file):
+    reader = csv.reader(
+        io.StringIO(in_memory_file),
+        delimiter=" ",
+        quotechar="|"
+    )
 
-def read_data_from_reader_object(csv_reader_object):
-    '''
-     execute csv's reader function to "read" the data 
-     from the passed file
-    '''
-    data = csv.reader(
-            csv_reader_object,
-            delimiter=" ",
-            quotechar="|"
-        )
-    return data
+    return reader
 
 
 def check_if_utf8_encoded(path_to_csv):
