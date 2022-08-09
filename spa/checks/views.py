@@ -2,13 +2,12 @@
 ### relative
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.views.decorators.csrf import csrf_exempt
 
 ### external
 import csv
 import random
-import os
 import io
+import chardet
 
 ############------------ FUNCTION(S) ------------##############################
 def home(request):
@@ -36,15 +35,21 @@ def report(request):
                 "isutf8_encoded": isutf8_encoded,
                 "columns": counts["columns"],
                 "rows": counts["rows"],
-                "encoding": "encoding",
                 # "headers": "headers",
                 # "sample": "sample"
             }
         else:
+            encoding = detect_encoding(in_memory_file)
+
             context = {
                 "isutf8_encoded": isutf8_encoded,
+                "encoding": encoding,
             }
-        return render(request, 'checks/report.html', context=context)
+        return render(
+            request, 
+            'checks/report.html', 
+            context=context
+        )
 
 
 def is_utf8_encoded(f):
@@ -65,32 +70,13 @@ def generate_reader_from_file(in_memory_file):
     return reader
 
 
-def check_if_utf8_encoded(path_to_csv):
-    '''
-     execute linux command `isutf8` 
-     from the `moreutils` module to check if file is
-     utf8 encoded, and if an error is raised
-     execute `uchardet` to detect encoding
-    '''
-    utf8_check_command = f"isutf8 {path_to_csv}"
-    
-    execute = os.system(utf8_check_command)
+def detect_encoding(reader):
+    match = chardet.detect(reader)
+    return match["encoding"]
 
-    if execute:
-        print("\n⛔ File not UTF8-encoded.\n")
-        print("This file's encoding:")
-        
-        os.system(f"uchardet {path_to_csv}")
-        
-        return False
-    return True
 
 
 def count_columns_and_rows(data):
-    '''
-     count number of columns and rows,
-     and make both numbers human-readable
-    '''
     
     column_count = 0
     row_count = 0
@@ -118,38 +104,6 @@ def list_headers(f):
     headers = dict(list(f)[0]).keys()
     return list(headers)
 
-
-def analyse_csv(path_to_csv):
-    '''
-     read a csv file using it's path,
-     and call helper functions to check:
-       - if the csv is utf8 encoded,
-       - what its headers are,
-       - how many columns it has,
-       - its row count
-    '''
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-
-    csv_reader_object = generate_reader_object(path_to_csv)
-
-    isutf8 = check_if_utf8_encoded(path_to_csv)
-
-    if isutf8:
-        print("\n✅ File is UTF8-encoded.\n")
-        
-        counts = count_columns_and_rows(csv_reader_object)
-        print(f"👉 File has {counts['columns']} columns.")
-        print(f"And {counts['rows']} rows.👇")
-
-
-        headers_list = list_headers(path_to_csv)
-        print("\nHere's a list of its headers:")
-        print(f"👆{headers_list}")
-    
-        return True
-    
-    print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    return False
 
 
 def make_sample(path_to_csv, sample_size, sample_indexes):
