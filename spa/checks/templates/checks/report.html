@@ -1,3 +1,6 @@
+{% extends 'checks/base.html' %}
+{% load static %}
+
 {% if isutf8_encoded %}
 <p>Is this file UTF8-encoded? {{ isutf8_encoded }}</p>
 {% endif %}
