@@ -10,7 +10,7 @@ import chardet
 
 ############------------ VIEW(S) ------------##############################
 def home(request):
-    return render(request, 'checks/index.html')
+    return render(request, 'checks/index.html', {})
 
 
 def report(request):
@@ -51,9 +51,9 @@ def report(request):
 
 
 ############------------ HELPER FUNCTION(S) ------------##############################
-def is_utf8_encoded(f):
+def is_utf8_encoded(in_memory_file):
     try:
-        f.decode('utf-8')
+        in_memory_file.decode('utf-8')
         return "Yes"
     except:
         return "No"
@@ -65,7 +65,6 @@ def generate_reader_from_file(in_memory_file):
         delimiter=" ",
         quotechar="|"
     )
-
     return reader
 
 
@@ -98,12 +97,6 @@ def extract_csv_metadata(data):
     }
 
     return metadata
-
-
-def list_headers(reader):
-    for row in reader:
-        print(row)
-        return list(row)
 
 
 def make_sample():
