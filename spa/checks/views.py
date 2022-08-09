@@ -12,10 +12,6 @@ import os
 import io
 
 ############------------ FUNCTION(S) ------------##############################
-def handle_uploaded_files(f):
-    pass
-
-
 def home(request):
     context = dict()
     context['form'] = UploadFileForm
@@ -26,17 +22,30 @@ def report(request):
     if request.method == 'POST':
         uploaded_file = request.FILES['file']
         
-        f = uploaded_file.read().decode('utf-8')
-        reader = csv.DictReader(io.StringIO(f))
+        f = uploaded_file.read()
 
-        data = [line for line in reader]
+        isutf8_encoded = is_utf8_encoded(f)
+        print(isutf8_encoded)
+        # reader = csv.DictReader(io.StringIO(f))
+
+        # data = [line for line in reader]
 
         context = {
-            "counts": data[0],
+            "isutf8_encoded": isutf8_encoded,
+            # "encoding": "encoding",
+            # "counts": data[0],
+            # "headers": "headers",
+            # "sample": "sample"
         }
         return render(request, 'checks/report.html', context=context)
 
 
+def is_utf8_encoded(f):
+    try:
+        f.decode('utf-8')
+        return True
+    except:
+        return False
 
 def generate_reader_object(path_to_csv):
     '''
@@ -108,17 +117,9 @@ def count_columns_and_rows(data):
     return counts
 
 
-def list_headers(path_to_csv):
-    '''
-     open the csv from its path and
-     return it's headers 
-     (first column's keys in a DictRead object)
-    '''
-    with open(path_to_csv) as csv_file:
-        dict_reader = csv.DictReader(csv_file)
-
-        headers = dict(list(dict_reader)[0]).keys()
-        return list(headers)
+def list_headers(f):
+    headers = dict(list(f)[0]).keys()
+    return list(headers)
 
 
 def analyse_csv(path_to_csv):
