@@ -23,7 +23,7 @@ def report(request):
 
         isutf8_encoded = is_utf8_encoded(in_memory_file)
 
-        if isutf8_encoded:
+        if isutf8_encoded == "Yes":
             
             in_memory_file = in_memory_file.decode('utf-8')
             
@@ -55,9 +55,9 @@ def report(request):
 def is_utf8_encoded(f):
     try:
         f.decode('utf-8')
-        return True
+        return "Yes"
     except:
-        return False
+        return "No"
 
 
 def generate_reader_from_file(in_memory_file):
