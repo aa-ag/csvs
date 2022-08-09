@@ -2,24 +2,40 @@
 ### relative
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .forms import NameForm
+from .forms import UploadFileForm
 from django.views.decorators.csrf import csrf_exempt
 
 ### external
 import csv
 import random
 import os
+import io
 
 ############------------ FUNCTION(S) ------------##############################
+def handle_uploaded_files(f):
+    pass
+
+
 def home(request):
     context = dict()
-    context['form'] = NameForm
+    context['form'] = UploadFileForm
     return render(request, 'checks/index.html', context=context)
 
 
 def report(request):
-    context = dict()
-    return render(request, 'checks/report.html', context=context)
+    if request.method == 'POST':
+        uploaded_file = request.FILES['file']
+        
+        f = uploaded_file.read().decode('utf-8')
+        reader = csv.DictReader(io.StringIO(f))
+
+        data = [line for line in reader]
+
+        context = {
+            "counts": data[0],
+        }
+        return render(request, 'checks/report.html', context=context)
+
 
 
 def generate_reader_object(path_to_csv):
@@ -64,15 +80,11 @@ def check_if_utf8_encoded(path_to_csv):
     return True
 
 
-def count_columns_and_rows(csv_reader_object):
+def count_columns_and_rows(data):
     '''
      count number of columns and rows,
      and make both numbers human-readable
     '''
-
-    data = read_data_from_reader_object(
-        csv_reader_object
-    )
     
     column_count = 0
     row_count = 0

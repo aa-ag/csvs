@@ -1,6 +1,6 @@
 from django import forms
 
-class NameForm(forms.Form):
+class UploadFileForm(forms.Form):
     sample_size = forms.DecimalField(
         label='Sample size',
         min_value=1
