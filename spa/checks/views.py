@@ -1,13 +1,20 @@
 ############------------ IMPORTS ------------##################################
+### relative
 from django.shortcuts import render
-from django.template import loader
+from django.http import HttpResponseRedirect
+from .forms import NameForm
+from django.views.decorators.csrf import csrf_exempt
+
+### external
 import csv
 import random
 import os
 
 ############------------ FUNCTION(S) ------------##############################
 def home(request):
-    return render(request, 'checks/index.html')
+    context = dict()
+    context['form'] = NameForm
+    return render(request, 'checks/index.html', context=context)
 
 
 def generate_reader_object(path_to_csv):
