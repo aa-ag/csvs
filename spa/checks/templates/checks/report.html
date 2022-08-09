@@ -1,55 +1,26 @@
 {% extends 'checks/base.html' %}
 {% block content %}
 
-{% if isutf8_encoded %}
-<p>Is this file UTF8-encoded? {{ isutf8_encoded }}</p>
-{% endif %}
+<div style="margin-top: 30px; overflow-wrap: break-word;">
+    {% if isutf8_encoded %}
+    <div>Is this file UTF8-encoded? {{ isutf8_encoded }}</div>
+    {% endif %}
 
-{% if columns %}
-<p>Columns: {{ columns }}</p>
-{% endif %}
+    {% if columns %}
+    <div>Columns: {{ columns }}</div>
+    {% endif %}
 
-{% if rows %}
-<p>Rows:: {{ rows }}</p>
-{% endif %}
+    {% if rows %}
+    <div>Rows: {{ rows }}</div>
+    {% endif %}
 
-{% if headers %}
-<p>Headers: {{ headers }}</p>
-{% endif %}
+    {% if headers %}
+    <div>Headers: {{ headers }}</div>
+    {% endif %}
 
-{% if encoding %}
-<p>Encoding: {{ encoding }}</p>
-{% endif %}
-
-<button class="btn btn-outline-secondary" onclick="location.href='/'">Back</button>
-
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
-      </tr>
-    </tbody>
-  </table>
+    {% if encoding %}
+    <div>Encoding: {{ encoding }}</div>
+    {% endif %}
+</div>
+<button class="btn btn-primary mb-3"  onclick="location.href='/'" style="margin-top: 30px;">Back</button>
 {% endblock %}

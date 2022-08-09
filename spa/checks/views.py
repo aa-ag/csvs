@@ -10,7 +10,7 @@ import chardet
 
 ############------------ VIEW(S) ------------##############################
 def home(request):
-    return render(request, 'checks/index.html', {})
+    return render(request, 'checks/home.html', {})
 
 
 def report(request):
