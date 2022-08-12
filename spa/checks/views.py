@@ -60,6 +60,11 @@ def report(request):
 
 ############------------ HELPER FUNCTION(S) ------------##############################
 def is_utf8_encoded(in_memory_file):
+    '''
+     check if a file is UTF8-encoded
+     by attempting to decode it as such,
+     and return Yes/No
+    '''
     try:
         in_memory_file.decode('utf-8')
         return "Yes"
