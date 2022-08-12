@@ -95,6 +95,12 @@ def detect_encoding(reader):
 
 
 def extract_csv_metadata(data):
+    '''
+     consume a css.reader and
+     (i) count its columns,
+     (ii) generate/return a list of its headers,
+     (iii) count its rows,
+    '''
     headers = 0
     column_count = 0
     row_count = 0
