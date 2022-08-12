@@ -22,9 +22,9 @@ def report(request):
      View to (i) redirect the end-user to a `report` page,
      and (ii) process an input CSV file and analyse it
     '''
-    if request.method == 'POST':
+    if request.method == "POST":
         
-        uploaded_file = request.FILES['file']
+        uploaded_file = request.FILES["file"]
         
         in_memory_file = uploaded_file.read()
 
@@ -32,7 +32,7 @@ def report(request):
 
         if isutf8_encoded == "Yes":
             
-            in_memory_file = in_memory_file.decode('utf-8')
+            in_memory_file = in_memory_file.decode("utf-8")
             
             reader = generate_reader_from_file(in_memory_file)
 
@@ -53,12 +53,18 @@ def report(request):
             }
         return render(
             request, 
-            'checks/report.html', 
+            "checks/report.html", 
             context=context
         )
 
 def sample(request):
-    return render(request, 'checks/sample.html', {})
+    row_count = request.POST["testing"]
+    context = {"row_count": row_count}
+    return render(
+        request,
+        'checks/sample.html',
+        context=context
+    )
 
 
 ############------------ HELPER FUNCTION(S) ------------##############################
