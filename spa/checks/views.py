@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 import csv
 import io
 import chardet
+import random
 
 ############------------ VIEW(S) ------------##############################
 def home(request):
@@ -57,9 +58,13 @@ def report(request):
             context=context
         )
 
+
 def sample(request):
-    row_count = request.POST["testing"]
-    context = {"row_count": row_count}
+    row_count = request.POST["row_count"]
+
+    random_numbers = generate_random_numbers_list(row_count)
+
+    context = {"random_numbers": random_numbers}
     return render(
         request,
         'checks/sample.html',
@@ -133,6 +138,14 @@ def extract_csv_metadata(data):
     }
 
     return metadata
+
+
+def generate_random_numbers_list(row_count):
+    random_list = random.sample(
+        range(1, int(row_count)),
+        25
+    )
+    return random_list
 
 
 def make_sample():
