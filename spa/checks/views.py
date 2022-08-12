@@ -74,7 +74,7 @@ def is_utf8_encoded(in_memory_file):
 
 def generate_reader_from_file(in_memory_file):
     '''
-     consume a CSV file and generate a 
+     consume a CSV file and generate/return a 
      csv.reader object with it
     '''
     reader = csv.reader(
@@ -86,6 +86,10 @@ def generate_reader_from_file(in_memory_file):
 
 
 def detect_encoding(reader):
+    '''
+     consume a csv.reader object and 
+     detect/return its encoding
+    '''
     match = chardet.detect(reader)
     return match["encoding"]
 
