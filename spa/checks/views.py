@@ -1,7 +1,7 @@
 ############------------ IMPORTS ------------##################################
 ### relative
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 
 ### external
 import csv
@@ -45,6 +45,16 @@ def report(request):
                 "rows": metadata["rows"],
                 "headers": metadata["headers"],
             }
+
+            response_file = HttpResponse(
+                content_type='text/csv',
+                headers={'Content-Disposition': 'attachment; filename="test.csv"'},
+            )
+
+            writer = csv.writer(response_file)
+            writer.writerow(['a', 'b', 'c'])
+            writer.writerow(['a', 'b', 'c'])
+            writer.writerow(['a', 'b', 'c'])
         else:
             encoding = detect_encoding(in_memory_file)
 
@@ -52,12 +62,12 @@ def report(request):
                 "isutf8_encoded": isutf8_encoded,
                 "encoding": encoding,
             }
-        return render(
-            request, 
-            "checks/report.html", 
-            context=context
-        )
-
+        # return render(
+        #     request, 
+        #     "checks/report.html", 
+        #     context=context
+        # ),
+        return response_file
 
 def sample(request):
     row_count = request.POST["row_count"]
