@@ -16,7 +16,7 @@
 
     {% if rows %}
     <div style="background-color: rgb(2, 2, 86); color: aliceblue; padding: 2.5px;">Rows</div>
-    <div>{{ rows }}</div>
+    <div id="rowCount">{{ rows }}</div>
     <hr>
     {% endif %}
 
@@ -45,8 +45,14 @@
     {% csrf_token %}
     <hr>
     <small>Click the button below to <b>generate a sample of 25 rows</b>.</small>
-    <input type="text" name="testing">
+    <input type="text" name="row_count" id="rowCountFormInput" hidden>
     <button class="btn btn-success mb-3" type="submit" value="Generate Sample">Generate Sample</button>
 </form>
+
+<script>
+  node = document.getElementById("rowCount");
+  row_count = node.textContent.replace(",", "");
+  document.getElementById("rowCountFormInput").value = row_count
+</script>
 {% endif %}
 {% endblock %}
