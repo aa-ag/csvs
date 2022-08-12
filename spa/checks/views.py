@@ -73,6 +73,10 @@ def is_utf8_encoded(in_memory_file):
 
 
 def generate_reader_from_file(in_memory_file):
+    '''
+     consume a CSV file and generate a 
+     csv.reader object with it
+    '''
     reader = csv.reader(
         io.StringIO(in_memory_file),
         delimiter=" ",
