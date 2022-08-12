@@ -18,6 +18,10 @@ def home(request):
 
 
 def report(request):
+    '''
+     View to (i) redirect the end-user to a `report` page,
+     and (ii) process an input CSV file and analyse it
+    '''
     if request.method == 'POST':
         
         uploaded_file = request.FILES['file']
