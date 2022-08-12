@@ -145,10 +145,10 @@ def generate_random_numbers_list(row_count):
 
 
 def make_sample(reader, random_numbers):
-    with open("static/media/sample.csv", "w", newline="") as csv_file:
+    with open("static/sample.csv", "w", newline="") as csv_file:
         csv_writter = csv.writer(
             csv_file,
-            delimiter=" ",
+            delimiter=",",
             quotechar="|"
         )
         
