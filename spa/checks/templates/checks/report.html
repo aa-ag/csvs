@@ -44,13 +44,7 @@
 <form class="row g-3" action="/sample" method="post" enctype="multipart/form-data" style="margin-top: 30px;">
     {% csrf_token %}
     <hr>
-    <small>Want to generate a sample from this CSV file? Enter the ID's you're looking for below.</small>
-    <small><b>Enter no ID's, and we will generate a sample of 25 random rows.</b></small>
-    <div class="form-row">
-        <div class="col">
-          <input type="text" class="form-control" placeholder="Enter ID's">
-        </div>
-      </div>
+    <small>Click the button below to <b>generate a sample of 25 rows</b>.</small>
     <button class="btn btn-success mb-3" type="submit" value="Generate Sample">Generate Sample</button>
 </form>
 {% endif %}
