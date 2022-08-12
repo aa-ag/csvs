@@ -10,6 +10,10 @@ import chardet
 
 ############------------ VIEW(S) ------------##############################
 def home(request):
+    '''
+     View for home-page rendering template `home.html`
+     where end-user uploads a CSV file for analysis
+    '''
     return render(request, 'checks/home.html', {})
 
 
