@@ -40,16 +40,18 @@ def report(request):
 
             metadata = extract_csv_metadata(reader)
 
-            random_numbers = generate_random_numbers_list(metadata["rows"])
-
-            make_sample(reader, random_numbers)
-
             context = {
                 "isutf8_encoded": isutf8_encoded,
                 "columns": metadata["columns"],
                 "rows": metadata["rows"],
                 "headers": metadata["headers"],
             }
+
+            reader = generate_reader_from_file(in_memory_file)
+
+            random_numbers = generate_random_numbers_list(metadata["rows"])
+
+            make_sample(reader, random_numbers)
 
         else:
             encoding = detect_encoding(in_memory_file)
@@ -86,7 +88,7 @@ def generate_reader_from_file(in_memory_file):
     '''
     reader = csv.reader(
         io.StringIO(in_memory_file),
-        delimiter=" ",
+        delimiter=",",
         quotechar="|"
     )
     return reader
@@ -114,8 +116,8 @@ def extract_csv_metadata(data):
     
     for row in data:
         if column_count == 0:
-            columns = ", ".join(row)
-            headers = columns
+            columns = row
+            headers = ", ".join(columns)
             column_count = len(columns)
             row_count += 1
         else:
@@ -143,11 +145,14 @@ def generate_random_numbers_list(row_count):
 
 
 def make_sample(reader, random_numbers):
-    with open("static/media/test.csv", "w", newline="") as csv_file:
+    with open("static/media/sample.csv", "w", newline="") as csv_file:
         csv_writter = csv.writer(
             csv_file,
             delimiter=" ",
             quotechar="|"
         )
-
-        csv_writter.writerow("aaa")
+        
+        for i, row in enumerate(reader):
+            if i == 0 or i in (random_numbers):
+                csv_writter.writerow(row)
+            
