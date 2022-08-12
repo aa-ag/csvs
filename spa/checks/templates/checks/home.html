@@ -2,7 +2,7 @@
 {% block content %}
 <form class="row g-3" action="/report" method="post" enctype="multipart/form-data" style="margin-top: 30px;">
     {% csrf_token %}
-    <small>Upload a CSV file to find out if about its encoding, headers, and how many columns and rows it has.</small>
+    <small>Upload a CSV file to find out about its encoding, headers, and how many columns and rows it has.</small>
     <input class="form-control" type="file" name="file" accept=".csv" placeholder="Upload a CSV" required>
     <div class="col-auto">
         <button class="btn btn-primary mb-3" type="submit" value="Submit">Submit</button>
