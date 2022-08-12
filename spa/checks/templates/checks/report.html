@@ -39,20 +39,4 @@
 <div>
     <button class="btn btn-secondary mb-3"  onclick="location.href='/'" style="margin-top: 30px;">Back</button>
 </div>
-
-{% if headers %}
-<form class="row g-3" action="/sample" method="post" enctype="multipart/form-data" style="margin-top: 30px;">
-    {% csrf_token %}
-    <hr>
-    <small>Click the button below to <b>generate a sample of 25 rows</b>.</small>
-    <input type="text" name="row_count" id="rowCountFormInput" hidden>
-    <button class="btn btn-success mb-3" type="submit" value="Generate Sample">Generate Sample</button>
-</form>
-
-<script>
-  node = document.getElementById("rowCount");
-  row_count = node.textContent.replace(",", "");
-  document.getElementById("rowCountFormInput").value = row_count
-</script>
-{% endif %}
 {% endblock %}

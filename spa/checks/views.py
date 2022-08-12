@@ -1,7 +1,8 @@
 ############------------ IMPORTS ------------##################################
 ### relative
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
+from django.conf import settings
 
 ### external
 import csv
@@ -39,6 +40,10 @@ def report(request):
 
             metadata = extract_csv_metadata(reader)
 
+            random_numbers = generate_random_numbers_list(metadata["rows"])
+
+            make_sample(reader, random_numbers)
+
             context = {
                 "isutf8_encoded": isutf8_encoded,
                 "columns": metadata["columns"],
@@ -46,15 +51,6 @@ def report(request):
                 "headers": metadata["headers"],
             }
 
-            response_file = HttpResponse(
-                content_type='text/csv',
-                headers={'Content-Disposition': 'attachment; filename="test.csv"'},
-            )
-
-            writer = csv.writer(response_file)
-            writer.writerow(['a', 'b', 'c'])
-            writer.writerow(['a', 'b', 'c'])
-            writer.writerow(['a', 'b', 'c'])
         else:
             encoding = detect_encoding(in_memory_file)
 
@@ -62,24 +58,11 @@ def report(request):
                 "isutf8_encoded": isutf8_encoded,
                 "encoding": encoding,
             }
-        # return render(
-        #     request, 
-        #     "checks/report.html", 
-        #     context=context
-        # ),
-        return response_file
-
-def sample(request):
-    row_count = request.POST["row_count"]
-
-    random_numbers = generate_random_numbers_list(row_count)
-
-    context = {"random_numbers": random_numbers}
-    return render(
-        request,
-        'checks/sample.html',
-        context=context
-    )
+        return render(
+            request, 
+            "checks/report.html", 
+            context=context
+        )
 
 
 ############------------ HELPER FUNCTION(S) ------------##############################
@@ -151,6 +134,7 @@ def extract_csv_metadata(data):
 
 
 def generate_random_numbers_list(row_count):
+    row_count = row_count.replace(',', '')
     random_list = random.sample(
         range(1, int(row_count)),
         25
@@ -158,9 +142,12 @@ def generate_random_numbers_list(row_count):
     return random_list
 
 
-def make_sample():
-    '''
-     https://docs.djangoproject.com/en/4.1/howto/outputting-csv/
-     https://www.etutorialspoint.com/index.php/252-django-generate-and-download-csv-file
-    '''
-    pass
+def make_sample(reader, random_numbers):
+    with open("static/media/test.csv", "w", newline="") as csv_file:
+        csv_writter = csv.writer(
+            csv_file,
+            delimiter=" ",
+            quotechar="|"
+        )
+
+        csv_writter.writerow("aaa")
