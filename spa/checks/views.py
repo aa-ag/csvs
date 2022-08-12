@@ -57,6 +57,9 @@ def report(request):
             context=context
         )
 
+def sample(request):
+    return render(request, 'checks/sample.html', {})
+
 
 ############------------ HELPER FUNCTION(S) ------------##############################
 def is_utf8_encoded(in_memory_file):
@@ -129,5 +132,6 @@ def extract_csv_metadata(data):
 def make_sample():
     '''
      https://docs.djangoproject.com/en/4.1/howto/outputting-csv/
+     https://www.etutorialspoint.com/index.php/252-django-generate-and-download-csv-file
     '''
     pass
