@@ -30,7 +30,7 @@ def report(request):
         
         in_memory_file = uploaded_file.read()
 
-        file_name = in_memory_file.name
+        file_name = uploaded_file.name
 
         isutf8_encoded = is_utf8_encoded(in_memory_file)
 
@@ -53,7 +53,7 @@ def report(request):
 
             random_numbers = generate_random_numbers_list(metadata["rows"])
 
-            make_sample(reader, random_numbers)
+            make_sample(file_name, reader, random_numbers)
 
         else:
             encoding = detect_encoding(in_memory_file)
@@ -146,8 +146,15 @@ def generate_random_numbers_list(row_count):
     return random_list
 
 
-def make_sample(reader, random_numbers):
-    with open("static/sample.csv", "w", newline="") as csv_file:
+def make_sample(file_name, reader, random_numbers):
+    clean_file_name = file_name.replace(".csv", "")
+
+    with open(
+        f"static/{clean_file_name}_sample.csv",
+        "w",
+        newline=""
+    ) as csv_file:
+    
         csv_writter = csv.writer(
             csv_file,
             delimiter=",",
