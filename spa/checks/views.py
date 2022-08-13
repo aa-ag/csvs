@@ -30,6 +30,8 @@ def report(request):
         
         in_memory_file = uploaded_file.read()
 
+        file_name = in_memory_file.name
+
         isutf8_encoded = is_utf8_encoded(in_memory_file)
 
         if isutf8_encoded == "Yes":
@@ -63,7 +65,7 @@ def report(request):
         return render(
             request, 
             "checks/report.html", 
-            context=context
+            # context=context
         )
 
 
