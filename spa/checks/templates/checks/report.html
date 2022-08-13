@@ -3,42 +3,42 @@
 {% block content %}
 
 <div style="margin-top: 30px; overflow-wrap: break-word;">
-    {% if isutf8_encoded %}
-    <div style="background-color: rgb(2, 2, 86); color: aliceblue; padding: 2.5px;">Is this file UTF8-encoded?</div>
-    <div>{{ isutf8_encoded }}</div>
-    <hr>
-    {% endif %}
+  {% if isutf8_encoded %}
+  <div style="background-color: rgb(2, 2, 86); color: aliceblue; padding: 2.5px;">Is this file UTF8-encoded?</div>
+  <div>{{ isutf8_encoded }}</div>
+  <hr>
+  {% endif %}
 
-    {% if columns %}
-    <div style="background-color: rgb(2, 2, 86); color: aliceblue; padding: 2.5px;">Columns</div>
-    <div>{{ columns }}</div>
-    <hr>
-    {% endif %}
+  {% if columns %}
+  <div style="background-color: rgb(2, 2, 86); color: aliceblue; padding: 2.5px;">Columns</div>
+  <div>{{ columns }}</div>
+  <hr>
+  {% endif %}
 
-    {% if rows %}
-    <div style="background-color: rgb(2, 2, 86); color: aliceblue; padding: 2.5px;">Rows</div>
-    <div id="rowCount">{{ rows }}</div>
-    <hr>
-    {% endif %}
+  {% if rows %}
+  <div style="background-color: rgb(2, 2, 86); color: aliceblue; padding: 2.5px;">Rows</div>
+  <div id="rowCount">{{ rows }}</div>
+  <hr>
+  {% endif %}
 
-    {% if headers %}
-    <div style="background-color: rgb(2, 2, 86); color: aliceblue; padding: 2.5px;">Headers</div>
-    <div>{{ headers }}</div>
-    <hr>
-    {% endif %}
+  {% if headers %}
+  <div style="background-color: rgb(2, 2, 86); color: aliceblue; padding: 2.5px;">Headers</div>
+  <div>{{ headers }}</div>
+  <hr>
+  {% endif %}
 
-    {% if encoding %}
-    <div style="background-color: rgb(2, 2, 86); color: aliceblue; padding: 2.5px;">Encoding</div>
-    <div>{{ encoding }}</div>
-    <hr>
-    {% endif %}
+  {% if encoding %}
+  <div style="background-color: rgb(2, 2, 86); color: aliceblue; padding: 2.5px;">Encoding</div>
+  <div>{{ encoding }}</div>
+  <hr>
+  {% endif %}
 
-    {% if isutf8_encoded == "No" %}
-    <div class="alert alert-danger" role="alert">Please ONLY use UTF8-encoded files.</div>
-    {% endif %}
+  {% if isutf8_encoded == "No" %}
+  <div class="alert alert-danger" role="alert">Please ONLY use UTF8-encoded files.</div>
+  {% endif %}
 </div>
 <div>
-    <button class="btn btn-secondary mb-3"  onclick="location.href='/'" style="margin-top: 30px;">Back</button>
+  <button class="btn btn-secondary mb-3"  onclick="location.href='/'" style="margin-top: 30px;">Back</button>
 </div>
 
 {% if headers %}
@@ -47,9 +47,9 @@
 <div>
 <br>
 <a href="static/{{ file_name }}">
-    <button class="btn btn-success mb-3">
-        Download Sample CSV
-    </button>
+  <button class="btn btn-success mb-3">
+    Download Sample CSV
+  </button>
 </a>
 </div>
 {% endif %}
