@@ -154,6 +154,11 @@ def generate_random_numbers_list(row_count):
 
 
 def make_sample(file_name, reader, random_numbers):
+    '''
+     create a csv file and save it to static
+     saving headers from original csv, and 
+     25 randomly selected rows (to sample original data)
+    '''
     with open(
         f"static/{file_name}_sample.csv",
         "w",
