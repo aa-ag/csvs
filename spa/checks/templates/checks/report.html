@@ -43,9 +43,10 @@
 
 {% if headers %}
 <hr>
-<small>Click the button below to <b>download a sample of 25 rows</b>.</small>
+<small>Click the button below to <b>download a sample of 25 random rows</b>.</small>
 <div>
-<a href="{% static 'sample.csv' %}">
+<br>
+<a href="static/{{ file_name }}">
     <button class="btn btn-success mb-3">
         Download Sample CSV
     </button>

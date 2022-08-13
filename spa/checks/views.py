@@ -63,7 +63,7 @@ def report(request):
                 "isutf8_encoded": isutf8_encoded,
                 "encoding": encoding,
             }
-            
+
         return render(
             request, 
             "checks/report.html", 
