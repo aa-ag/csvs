@@ -30,7 +30,7 @@ def report(request):
         
         in_memory_file = uploaded_file.read()
 
-        file_name = uploaded_file.name
+        file_name = uploaded_file.name.replace(".csv", "")
 
         isutf8_encoded = is_utf8_encoded(in_memory_file)
 
@@ -47,6 +47,7 @@ def report(request):
                 "columns": metadata["columns"],
                 "rows": metadata["rows"],
                 "headers": metadata["headers"],
+                "file_name": f"{file_name}_sample.csv",
             }
 
             reader = generate_reader_from_file(in_memory_file)
@@ -62,10 +63,11 @@ def report(request):
                 "isutf8_encoded": isutf8_encoded,
                 "encoding": encoding,
             }
+            
         return render(
             request, 
             "checks/report.html", 
-            # context=context
+            context=context
         )
 
 
@@ -147,14 +149,12 @@ def generate_random_numbers_list(row_count):
 
 
 def make_sample(file_name, reader, random_numbers):
-    clean_file_name = file_name.replace(".csv", "")
-
     with open(
-        f"static/{clean_file_name}_sample.csv",
+        f"static/{file_name}_sample.csv",
         "w",
         newline=""
     ) as csv_file:
-    
+
         csv_writter = csv.writer(
             csv_file,
             delimiter=",",
