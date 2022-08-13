@@ -140,7 +140,12 @@ def extract_csv_metadata(data):
 
 
 def generate_random_numbers_list(row_count):
-    row_count = row_count.replace(',', '')
+    '''
+     convert row_count into an integer, 
+     and generate a list of random numbers from 
+     1 to number of rows for each csv file.
+    '''
+    row_count = row_count.replace(",", "")
     random_list = random.sample(
         range(1, int(row_count)),
         25
