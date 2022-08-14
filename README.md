@@ -1,9 +1,13 @@
 ## CSVs
 
-A repo to check back on a few things re: working with csvs.
+This project started as a repo to practice handling CSV files, and turned into an app to analyse CSV files.
 
-### csv
+# Checks
 
-Python's [csv](https://docs.python.org/3/library/csv.html) module is a great place start as it "implements classes to read and write tabular data in CSV format".
+`Checks` is a Single-Page Application to let users upload CSV files and check (a) their encoding, (b) their metadata, and (c) generate a sample file with 25 random rows + their original headers.
 
-Now turning into a Single-Page Application to provide a UI.
+### Stack
+
+`Check`'s backend is Django, Python & Cron.
+
+And it's frontend is set up with Bootstrap & Jinja.
