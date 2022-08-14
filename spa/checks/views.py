@@ -9,6 +9,8 @@ import csv
 import io
 import chardet
 import random
+from time import sleep
+import os
 
 ############------------ VIEW(S) ------------##############################
 def home(request):
@@ -30,7 +32,7 @@ def report(request):
         
         in_memory_file = uploaded_file.read()
 
-        file_name = uploaded_file.name.replace(".csv", "")
+        uploaded_file_name = uploaded_file.name.replace(".csv", "")
 
         isutf8_encoded = is_utf8_encoded(in_memory_file)
 
@@ -42,19 +44,23 @@ def report(request):
 
             metadata = extract_csv_metadata(reader)
 
+            sample_file_name = f"{uploaded_file_name}_sample.csv"
+
             context = {
                 "isutf8_encoded": isutf8_encoded,
                 "columns": metadata["columns"],
                 "rows": metadata["rows"],
                 "headers": metadata["headers"],
-                "file_name": f"{file_name}_sample.csv",
+                "file_name": sample_file_name,
             }
 
             reader = generate_reader_from_file(in_memory_file)
 
             random_numbers = generate_random_numbers_list(metadata["rows"])
 
-            make_sample(file_name, reader, random_numbers)
+            make_sample(uploaded_file_name, reader, random_numbers)
+
+            # delete_sample(sample_file_name)
 
         else:
             encoding = detect_encoding(in_memory_file)
@@ -160,7 +166,7 @@ def make_sample(file_name, reader, random_numbers):
      25 randomly selected rows (to sample original data)
     '''
     with open(
-        f"static/{file_name}_sample.csv",
+        f"static/samples/{file_name}_sample.csv",
         "w",
         newline=""
     ) as csv_file:
@@ -175,3 +181,8 @@ def make_sample(file_name, reader, random_numbers):
             if i == 0 or i in (random_numbers):
                 csv_writter.writerow(row)
             
+
+def delete_sample(sample_file_name):
+    sleep(5)
+    samples_directory = "static/samples/"
+    os.remove(os.path.join(samples_directory, sample_file_name))
