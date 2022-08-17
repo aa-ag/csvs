@@ -60,8 +60,6 @@ def report(request):
 
             make_sample(uploaded_file_name, reader, random_numbers)
 
-            # delete_sample(sample_file_name)
-
         else:
             encoding = detect_encoding(in_memory_file)
 
