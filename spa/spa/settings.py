@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("KEY")
+SECRET_KEY = 'django-insecure-#b8it*lfi3vd5o!1v$h3c2))fxy0rmdo*m!oqe!a$)*bz4o+15'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -33,7 +33,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'checks',
-    'django_crontab',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -128,7 +127,3 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-CRONJOBS = [
-    ('*/10 * * * * *', 'spa.cron.delete_samples_cron_job')
-]
