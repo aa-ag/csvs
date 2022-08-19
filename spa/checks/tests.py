@@ -1,5 +1,7 @@
 from django.test import TestCase, Client
 
+### Unit tests
+### --- VIEWS -----------------------------------------------------------------
 class TestViews(TestCase):
     def is_home_html_rendered(self):
         '''
