@@ -5,9 +5,6 @@
 csvenv
 csvenv/*
 
-# circle ci
-.circleci
-
 # Settings or config
 settings
 settings.py
