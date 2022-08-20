@@ -5,11 +5,8 @@
 csvenv
 csvenv/*
 
-# Settings or config
-settings
-settings.py
-spa/spa/settings.py
-spa/spa/settings
+# environment variables
+.env
 
 config
 config.py
