@@ -8,6 +8,10 @@ csvenv/*
 # environment variables
 .env
 
+# django static
+static/admin
+static/admin/*
+
 config
 config.py
 
