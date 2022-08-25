@@ -56,6 +56,7 @@ def report(request):
                 "columns": metadata["columns"],
                 "rows": metadata["rows"],
                 "headers": metadata["headers"],
+                "uploaded_file_name": uploaded_file_name,
                 "sample_file_name": sample_file_name,
             }
 
