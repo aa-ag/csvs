@@ -39,6 +39,8 @@ def report(request):
         if isutf8_encoded == "Yes":
             
             in_memory_file = in_memory_file.decode("utf-8")
+
+            ### checks length/rows
             
             reader = generate_reader_from_file(in_memory_file)
 
