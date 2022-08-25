@@ -33,6 +33,9 @@ def report(request):
         in_memory_file = uploaded_file.read()
 
         uploaded_file_name = uploaded_file.name.replace(".csv", "")
+        uploaded_file_name = uploaded_file_name.replace(".", "")
+        uploaded_file_name = uploaded_file_name.replace("-", "")
+        uploaded_file_name = uploaded_file_name.replace(" ", "_")
 
         isutf8_encoded = is_utf8_encoded(in_memory_file)
 
