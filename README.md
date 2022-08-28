@@ -8,6 +8,8 @@ This project started as a repo to practice handling CSV files, and turned into a
 
 ### Stack
 
-`Check`'s backend is Django, Python & Cron.
+`Check`'s backend is Django, Python.
 
 And it's frontend is set up with Bootstrap & Jinja.
+
+Deployed to AWS using Docker.
