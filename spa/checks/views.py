@@ -33,6 +33,9 @@ def report(request):
         in_memory_file = uploaded_file.read()
 
         uploaded_file_name = uploaded_file.name.replace(".csv", "")
+        uploaded_file_name = uploaded_file_name.replace(".", "")
+        uploaded_file_name = uploaded_file_name.replace("-", "")
+        uploaded_file_name = uploaded_file_name.replace(" ", "_")
 
         isutf8_encoded = is_utf8_encoded(in_memory_file)
 
@@ -51,14 +54,15 @@ def report(request):
                 "columns": metadata["columns"],
                 "rows": metadata["rows"],
                 "headers": metadata["headers"],
-                "file_name": sample_file_name,
+                "uploaded_file_name": uploaded_file,
+                "sample_file_name": sample_file_name,
             }
 
             reader = generate_reader_from_file(in_memory_file)
 
             random_numbers = generate_random_numbers_list(metadata["rows"])
 
-            make_sample(uploaded_file_name, reader, random_numbers)
+            # make_sample(uploaded_file_name, reader, random_numbers)
 
         else:
             encoding = detect_encoding(in_memory_file)
@@ -150,6 +154,8 @@ def generate_random_numbers_list(row_count):
      1 to number of rows for each csv file.
     '''
     row_count = row_count.replace(",", "")
+
+    
     random_list = random.sample(
         range(1, int(row_count)),
         25
