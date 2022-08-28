@@ -3,6 +3,8 @@
 {% block content %}
 
 <div style="margin-top: 30px; overflow-wrap: break-word;">
+  <h4>{{ uploaded_file_name }}</h4>
+
   {% if isutf8_encoded %}
   <div style="background-color: rgb(2, 2, 86); color: aliceblue; padding: 2.5px;">Is this file UTF8-encoded?</div>
   <div>{{ isutf8_encoded }}</div>
@@ -41,7 +43,7 @@
   <button class="btn btn-secondary mb-3"  onclick="location.href='/'" style="margin-top: 30px;">Back</button>
 </div>
 
-{% if headers %}
+<!-- {% if headers %}
 <hr>
 <small>Click the button below to <b>download a sample of 25 random rows</b>.</small>
 <div>
@@ -52,5 +54,5 @@
   </button>
 </a>
 </div>
-{% endif %}
+{% endif %} -->
 {% endblock %}
