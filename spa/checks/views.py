@@ -11,6 +11,7 @@ import chardet
 import random
 from time import sleep
 import os
+import pandas as pd
 
 ############------------ VIEW(S) ------------##############################
 def home(request):
@@ -49,7 +50,11 @@ def report(request):
 
             metadata = extract_csv_metadata(reader)
 
-            sample_file_name = f"{uploaded_file_name}_sample.csv"
+            reader = generate_reader_from_file(in_memory_file)
+
+            data_checks = perform_data_checks(reader)
+
+            # sample_file_name = f"{uploaded_file_name}_sample.csv"
 
             context = {
                 "isutf8_encoded": isutf8_encoded,
@@ -57,14 +62,8 @@ def report(request):
                 "rows": metadata["rows"],
                 "headers": metadata["headers"],
                 "uploaded_file_name": uploaded_file,
-                "sample_file_name": sample_file_name,
+                # "sample_file_name": sample_file_name,
             }
-
-            reader = generate_reader_from_file(in_memory_file)
-
-            random_numbers = generate_random_numbers_list(metadata["rows"])
-
-            # make_sample(uploaded_file_name, reader, random_numbers)
 
         else:
             encoding = detect_encoding(in_memory_file)
@@ -192,3 +191,7 @@ def delete_sample(sample_file_name):
     sleep(5)
     samples_directory = "static/samples/"
     os.remove(os.path.join(samples_directory, sample_file_name))
+
+
+def perform_data_checks(reader):
+    pass
