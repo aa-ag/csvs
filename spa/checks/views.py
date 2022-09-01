@@ -1,5 +1,6 @@
 ############------------ IMPORTS ------------##################################
 ### relative
+from asyncore import read
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.conf import settings
@@ -43,6 +44,8 @@ def report(request):
         if isutf8_encoded == "Yes":
             
             in_memory_file = in_memory_file.decode("utf-8")
+            dictreader = generate_dictreader_from_file(in_memory_file)
+            data_checks = perform_data_checks(dictreader)
 
             ### checks length/rows
             
@@ -50,9 +53,7 @@ def report(request):
 
             metadata = extract_csv_metadata(reader)
 
-            reader = generate_reader_from_file(in_memory_file)
 
-            data_checks = perform_data_checks(reader)
 
             # sample_file_name = f"{uploaded_file_name}_sample.csv"
 
@@ -92,6 +93,18 @@ def is_utf8_encoded(in_memory_file):
         return "Yes"
     except:
         return "No"
+
+def generate_dictreader_from_file(in_memory_file):
+    '''
+     consume a CSV file and generate/return a 
+     csv.reader object with it
+    '''
+    reader = csv.DictReader(
+        io.StringIO(in_memory_file),
+        delimiter=",",
+        quotechar="|"
+    )
+    return reader
 
 
 def generate_reader_from_file(in_memory_file):
@@ -194,4 +207,6 @@ def delete_sample(sample_file_name):
 
 
 def perform_data_checks(reader):
-    pass
+    i = 0
+    for row in reader:
+        print(row["name"])
