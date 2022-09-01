@@ -12,7 +12,7 @@ import chardet
 import random
 from time import sleep
 import os
-import pandas as pd
+import datetime
 
 ############------------ VIEW(S) ------------##############################
 def home(request):
@@ -61,7 +61,8 @@ def report(request):
                 "rows": metadata["rows"],
                 "headers": metadata["headers"],
                 "uploaded_file_name": uploaded_file,
-                "all_names_are_provided": data_checks["all_names_are_provided"],
+                "names_are_valid": data_checks["names_are_valid"],
+                "dates_are_valid": data_checks["dates_are_valid"],
             }
 
         else:
@@ -205,13 +206,21 @@ def delete_sample(sample_file_name):
 
 
 def perform_data_checks(dictreader):
-    all_names_are_provided = "Yes"
+    names_are_valid = "Yes"
+    dates_are_valid = "Yes"
+
     for row in dictreader:
         if row["name"] == None:
-            all_names_are_provided = "No"
+            names_are_valid = "No"
+        
+        try:
+            datetime.datetime.strptime( row["date"].strip('"'), '%Y-%m-%d')
+        except:
+            dates_are_valid = "No"
 
     data_checks_response = {
-        "all_names_are_provided": all_names_are_provided
+        "names_are_valid": names_are_valid,
+        "dates_are_valid": dates_are_valid
     }
 
     return data_checks_response
