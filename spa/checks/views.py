@@ -44,16 +44,14 @@ def report(request):
         if isutf8_encoded == "Yes":
             
             in_memory_file = in_memory_file.decode("utf-8")
+            
             dictreader = generate_dictreader_from_file(in_memory_file)
+            
             data_checks = perform_data_checks(dictreader)
-
-            ### checks length/rows
             
             reader = generate_reader_from_file(in_memory_file)
 
             metadata = extract_csv_metadata(reader)
-
-
 
             # sample_file_name = f"{uploaded_file_name}_sample.csv"
 
@@ -63,7 +61,7 @@ def report(request):
                 "rows": metadata["rows"],
                 "headers": metadata["headers"],
                 "uploaded_file_name": uploaded_file,
-                # "sample_file_name": sample_file_name,
+                "all_names_are_provided": data_checks["all_names_are_provided"],
             }
 
         else:
@@ -206,7 +204,14 @@ def delete_sample(sample_file_name):
     os.remove(os.path.join(samples_directory, sample_file_name))
 
 
-def perform_data_checks(reader):
-    i = 0
-    for row in reader:
-        print(row["name"])
+def perform_data_checks(dictreader):
+    all_names_are_provided = "Yes"
+    for row in dictreader:
+        if row["name"] == None:
+            all_names_are_provided = "No"
+
+    data_checks_response = {
+        "all_names_are_provided": all_names_are_provided
+    }
+
+    return data_checks_response
