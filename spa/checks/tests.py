@@ -1,4 +1,5 @@
 ### external
+from urllib import response
 from django.test import TestCase
 from django.http import HttpRequest
 ### relative
@@ -23,3 +24,11 @@ class TestViews(TestCase):
         response = self.client.get('')
         self.assertEqual(response.status_code, 200)
 
+
+    def test_if_home_template_returns_correct_html(self):
+        '''
+        '''
+        request = HttpRequest()
+        response = home(request)
+        html = response.content.decode('utf-8')
+        self.assertTrue(html.endswith('</html>'))
