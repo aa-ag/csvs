@@ -13,7 +13,7 @@ class TestViews(TestCase):
          Check if Django is getting the correct
          view it expects when calling the site's root
         '''
-        found = resolve('/')
+        found = resolve("/")
         self.assertEqual(found.func, home)
 
 
@@ -21,7 +21,7 @@ class TestViews(TestCase):
         '''
          Check if the home view renders OK
         '''
-        response = self.client.get('')
+        response = self.client.get("")
         self.assertEqual(response.status_code, 200)
 
 
@@ -30,5 +30,5 @@ class TestViews(TestCase):
         '''
         request = HttpRequest()
         response = home(request)
-        html = response.content.decode('utf-8')
-        self.assertTrue(html.endswith('</html>'))
+        html = response.content.decode("utf-8")
+        self.assertIn("<title> checks </title>", html)
