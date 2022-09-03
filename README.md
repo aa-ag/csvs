@@ -1,3 +1,7 @@
+# Template:
+[![aa-ag](https://circleci.com/gh/aa-ag/csvs.svg?style=svg)](https://circleci.com/gh/aa-ag/csvs)
+
+
 ## CSVs
 
 This project started as a repo to practice handling CSV files, and turned into an app to analyse CSV files.
