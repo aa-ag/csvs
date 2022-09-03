@@ -1,4 +1,3 @@
-# Template:
 [![aa-ag](https://circleci.com/gh/aa-ag/csvs.svg?style=svg)](https://circleci.com/gh/aa-ag/csvs)
 
 
