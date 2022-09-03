@@ -1,4 +1,4 @@
-[![aa-ag](https://circleci.com/gh/aa-ag/csvs.svg?style=svg)](https://circleci.com/gh/aa-ag/csvs)
+[![aa-ag](https://circleci.com/gh/aa-ag/csvs.svg?style=shield)](https://circleci.com/gh/aa-ag/csvs)
 
 
 ## CSVs
