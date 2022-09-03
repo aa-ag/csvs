@@ -1,4 +1,7 @@
+### external
 from django.test import TestCase
+from django.http import HttpRequest
+### relative
 from django.urls import resolve
 from checks.views import home
 
@@ -19,3 +22,4 @@ class TestViews(TestCase):
         '''
         response = self.client.get('')
         self.assertEqual(response.status_code, 200)
+
