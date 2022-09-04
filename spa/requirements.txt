@@ -4,5 +4,3 @@ Django
 gunicorn
 sqlparse
 python-dotenv
-selenium==3.141.0
-webdriver-manager
