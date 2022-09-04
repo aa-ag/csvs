@@ -27,6 +27,8 @@ class TestViews(TestCase):
 
     def test_if_home_template_returns_correct_html(self):
         '''
+         Check that the home() view is rendering the
+         expected template
         '''
         request = HttpRequest()
         response = home(request)
