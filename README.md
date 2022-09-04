@@ -1,5 +1,7 @@
 [![aa-ag](https://circleci.com/gh/aa-ag/csvs.svg?style=shield)](https://circleci.com/gh/aa-ag/csvs)
 
+[![aa-ag](https://dl.circleci.com/insights-snapshot/gh/aa-ag/csvs/main/workflow/badge.svg?window=30d)](https://app.circleci.com/insights/github/aa-ag/csvs?branches=main&workflows=workflowy&reporting-window=last-30-days&insights-snapshot=true)
+
 
 ## CSVs
 
