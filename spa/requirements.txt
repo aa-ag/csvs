@@ -4,3 +4,4 @@ Django
 gunicorn
 sqlparse
 python-dotenv
+selenium
