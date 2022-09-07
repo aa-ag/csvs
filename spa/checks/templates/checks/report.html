@@ -4,11 +4,10 @@
 
 <div style="margin-top: 30px; overflow-wrap: break-word;">
   <div>
-  <h4>{{ uploaded_file_name }}</h4>
   {% if is_ok == True %}
-    🟢 has </b>passed</b> the minimun requirenments.  You may now send over for your data migration. 🟢
+    🟢 {{ uploaded_file_name }} 🟢 has </b>passed</b> the minimun requirenments.  You may now send over for your data migration.
   {% else %}
-    🔴 <b>needs review</b>: some requirenments are not yet met. 🔴
+    🔴 {{ uploaded_file_name }} 🔴<b>needs review</b>: some requirenments are not yet met.
   {% endif %}
   </div>
 
