@@ -57,7 +57,7 @@ def report(request):
 
             is_ok = False
 
-            if isutf8_encoded == True and \
+            if isutf8_encoded == "Yes" and \
                 data_checks["names_are_valid"] == "Yes":
                     is_ok = True
 
