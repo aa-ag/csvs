@@ -3,7 +3,12 @@
 {% block content %}
 
 <div style="margin-top: 30px; overflow-wrap: break-word;">
+  <div>
   <h4>{{ uploaded_file_name }}</h4>
+  {% if is_ok == True %}
+    has passed the minimun requirenments.  You may now send over for your data migration.
+  {% endif %}
+  </div>
 
   {% if isutf8_encoded %}
   <div style="background-color: rgb(2, 2, 86); color: aliceblue; padding: 2.5px;">Is this file UTF8-encoded?</div>
