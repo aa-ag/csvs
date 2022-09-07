@@ -55,6 +55,13 @@ def report(request):
 
             # sample_file_name = f"{uploaded_file_name}_sample.csv"
 
+            is_ok = False
+
+            if isutf8_encoded == True and \
+                data_checks["names_are_valid"] == "Yes" and \
+                    data_checks["dates_are_valid"] == "Yes":
+                    is_ok = True
+
             context = {
                 "isutf8_encoded": isutf8_encoded,
                 "columns": metadata["columns"],
@@ -63,6 +70,7 @@ def report(request):
                 "uploaded_file_name": uploaded_file,
                 "names_are_valid": data_checks["names_are_valid"],
                 "dates_are_valid": data_checks["dates_are_valid"],
+                "is_ok": is_ok,
             }
 
         else:
