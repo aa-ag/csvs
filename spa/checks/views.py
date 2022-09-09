@@ -1,7 +1,6 @@
 ############------------ IMPORTS ------------##################################
 ### relative
 from asyncore import read
-from curses import meta
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.conf import settings
@@ -50,36 +49,29 @@ def report(request):
             
             metadata = extract_csv_metadata(reader)
             
-            if "name" in metadata["headers"].split(","):
-
-                dictreader = generate_dictreader_from_file(in_memory_file)
-                
-                data_checks = perform_data_checks(dictreader)
+            dictreader = generate_dictreader_from_file(in_memory_file)
             
-                # sample_file_name = f"{uploaded_file_name}_sample.csv"
+            data_checks = perform_data_checks(dictreader, metadata["headers"])
+            
+            # sample_file_name = f"{uploaded_file_name}_sample.csv"
 
-                is_ok = False
+            is_ok = False
 
-                if isutf8_encoded == "Yes" and \
-                    data_checks["names_are_valid"] == "Yes":
-                        is_ok = True
+            if isutf8_encoded == "Yes" and \
+                data_checks["names_are_valid"] == "Yes" and \
+                    data_checks["mandatory_headers_are_in"] == "Yes":
+                    is_ok = True
 
-                context = {
-                    "isutf8_encoded": isutf8_encoded,
-                    "columns": metadata["columns"],
-                    "rows": metadata["rows"],
-                    "headers": metadata["headers"],
-                    "uploaded_file_name": uploaded_file,
-                    "names_are_valid": data_checks["names_are_valid"],
-                    "dates_are_valid": data_checks["dates_are_valid"],
-                    "is_ok": is_ok,
-                }
-            else:
-                return render(
-                        request, 
-                        "checks/404.html", 
-                    )
-
+            context = {
+                "isutf8_encoded": isutf8_encoded,
+                "columns": metadata["columns"],
+                "rows": metadata["rows"],
+                "headers": metadata["headers"],
+                "uploaded_file_name": uploaded_file,
+                "names_are_valid": data_checks["names_are_valid"],
+                "dates_are_valid": data_checks["dates_are_valid"],
+                "is_ok": is_ok,
+            }
 
         else:
             encoding = detect_encoding(in_memory_file)
@@ -221,20 +213,27 @@ def delete_sample(sample_file_name):
     os.remove(os.path.join(samples_directory, sample_file_name))
 
 
-def perform_data_checks(dictreader):
+def perform_data_checks(dictreader, headers):
+    mandatory_headers_are_in = "No"
     names_are_valid = "Yes"
     dates_are_valid = "Yes"
 
-    for row in dictreader:
-        if row["name"] == None:
-            names_are_valid = "No"
-        
-        try:
-            datetime.datetime.strptime( row["date"].strip('"'), '%Y-%m-%d')
-        except:
-            dates_are_valid = "No"
+    if "name" in headers.split(", "):
+        mandatory_headers_are_in = "Yes"
+
+        for row in dictreader:
+            if row["name"] == None:
+                names_are_valid = "No"
+            
+            try:
+                datetime.datetime.strptime( row["date"].strip('"'), '%Y-%m-%d')
+            except:
+                dates_are_valid = "No"
+    else:
+        names_are_valid = "No"
 
     data_checks_response = {
+        "mandatory_headers_are_in": mandatory_headers_are_in,
         "names_are_valid": names_are_valid,
         "dates_are_valid": dates_are_valid
     }
