@@ -45,13 +45,15 @@ def report(request):
             
             in_memory_file = in_memory_file.decode("utf-8")
             
+            reader = generate_reader_from_file(in_memory_file)
+            
+            metadata = extract_csv_metadata(reader)
+            
             dictreader = generate_dictreader_from_file(in_memory_file)
             
             data_checks = perform_data_checks(dictreader)
             
-            reader = generate_reader_from_file(in_memory_file)
 
-            metadata = extract_csv_metadata(reader)
 
             # sample_file_name = f"{uploaded_file_name}_sample.csv"
 
