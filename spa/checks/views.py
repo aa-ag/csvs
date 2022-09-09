@@ -70,6 +70,7 @@ def report(request):
                 "uploaded_file_name": uploaded_file,
                 "names_are_valid": data_checks["names_are_valid"],
                 "dates_are_valid": data_checks["dates_are_valid"],
+                "mandatory_headers_are_in": data_checks["mandatory_headers_are_in"],
                 "is_ok": is_ok,
             }
 
