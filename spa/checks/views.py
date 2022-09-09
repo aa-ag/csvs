@@ -1,6 +1,7 @@
 ############------------ IMPORTS ------------##################################
 ### relative
 from asyncore import read
+from curses import meta
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.conf import settings
@@ -49,30 +50,36 @@ def report(request):
             
             metadata = extract_csv_metadata(reader)
             
-            dictreader = generate_dictreader_from_file(in_memory_file)
+            if "name" in metadata["headers"].split(","):
+
+                dictreader = generate_dictreader_from_file(in_memory_file)
+                
+                data_checks = perform_data_checks(dictreader)
             
-            data_checks = perform_data_checks(dictreader)
-            
+                # sample_file_name = f"{uploaded_file_name}_sample.csv"
 
+                is_ok = False
 
-            # sample_file_name = f"{uploaded_file_name}_sample.csv"
+                if isutf8_encoded == "Yes" and \
+                    data_checks["names_are_valid"] == "Yes":
+                        is_ok = True
 
-            is_ok = False
+                context = {
+                    "isutf8_encoded": isutf8_encoded,
+                    "columns": metadata["columns"],
+                    "rows": metadata["rows"],
+                    "headers": metadata["headers"],
+                    "uploaded_file_name": uploaded_file,
+                    "names_are_valid": data_checks["names_are_valid"],
+                    "dates_are_valid": data_checks["dates_are_valid"],
+                    "is_ok": is_ok,
+                }
+            else:
+                return render(
+                        request, 
+                        "checks/404.html", 
+                    )
 
-            if isutf8_encoded == "Yes" and \
-                data_checks["names_are_valid"] == "Yes":
-                    is_ok = True
-
-            context = {
-                "isutf8_encoded": isutf8_encoded,
-                "columns": metadata["columns"],
-                "rows": metadata["rows"],
-                "headers": metadata["headers"],
-                "uploaded_file_name": uploaded_file,
-                "names_are_valid": data_checks["names_are_valid"],
-                "dates_are_valid": data_checks["dates_are_valid"],
-                "is_ok": is_ok,
-            }
 
         else:
             encoding = detect_encoding(in_memory_file)
