@@ -39,3 +39,9 @@ class TestViews(TestCase):
     def test_if_home_contains_csrf_token(self):
         response = self.client.get("")
         self.assertIn("csrf_token", response.context)
+
+    def test_home_form(self):
+        with open("static/samples/constructors_sample.csv") as f:
+            response = self.client.post("/report", {"file":f})
+            print(response.context)
+            
