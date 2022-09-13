@@ -34,3 +34,8 @@ class TestViews(TestCase):
         response = home(request)
         html = response.content.decode("utf-8")
         self.assertIn("<title> checks </title>", html)
+
+    
+    def test_if_home_contains_csrf_token(self):
+        response = self.client.get("")
+        self.assertIn("csrf_token", response.context)
