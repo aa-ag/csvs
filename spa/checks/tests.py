@@ -43,5 +43,5 @@ class TestViews(TestCase):
     def test_home_form(self):
         with open("static/samples/constructors_sample.csv") as f:
             response = self.client.post("/report", {"file":f})
-            print(response.context)
+            self.assertEqual(response.status_code, 200)
             
