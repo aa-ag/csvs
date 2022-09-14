@@ -45,12 +45,17 @@ class TestViews(TestCase):
             response = self.client.post("/report", {"file":f})
             self.assertEqual(response.status_code, 200)
     
-    def test_home_form_response(self):
+    def test_home_form_passes_with_correct_file(self):
+        with open("static/samples/utf8_users.csv") as f:
+            notok = "has </b>passed</b> the minimun requirenments."
+            response = self.client.post("/report", {"file":f})
+            html = response.content.decode("utf-8")
+            self.assertIn(notok, html)
+
+    def test_home_form_fails_with_wrong_file(self):
         with open("static/samples/constructors_sample.csv") as f:
-            ok = "has </b>passed</b> the minimun requirenments.  You may now send over for your data migration."
             notok = "<b>needs review</b>: some requirenments are not yet met."
             response = self.client.post("/report", {"file":f})
             html = response.content.decode("utf-8")
-            # self.assertIn(ok, html)
             self.assertIn(notok, html)
             
