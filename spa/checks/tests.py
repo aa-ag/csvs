@@ -59,11 +59,10 @@ class TestViews(TestCase):
             html = response.content.decode("utf-8")
             self.assertIn(notok, html)
     
-    # def test_home_form_response_includes_all_parameters(self):
-    #     with open("static/samples/constructors_sample.csv") as f:
-    #         response = self.client.post("/report", {"file":f})
+    def test_home_form_response_includes_all_parameters(self):
+        with open("static/samples/utf8_users.csv") as f:
+            response = self.client.post("/report", {"file":f})
 
-    #         for element in response.context:
-    #             for j in element:
-    #                 print(j)
-    #                 self.assertIn("isutf8_encoded", j)
+            for element in response.context:
+                for j in element:
+                    print(j.keys())
