@@ -63,6 +63,18 @@ class TestViews(TestCase):
         with open("static/samples/utf8_users.csv") as f:
             response = self.client.post("/report", {"file":f})
 
+            keys = list()
+
             for element in response.context:
                 for j in element:
-                    print(j.keys())
+                    keys.extend(list(j.keys()))
+            
+            keys = list(set(keys))
+
+            expected = [
+                "isutf8_encoded","columns","rows","headers",
+                "uploaded_file_name","names_are_valid",
+                "dates_are_valid","mandatory_headers_are_in","is_ok",
+            ]
+
+            self.assertTrue(all(x in keys for x in expected))
