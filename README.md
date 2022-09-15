@@ -18,9 +18,3 @@ This project started as a repo to practice handling CSV files, and turned into a
 And it's frontend is set up with Bootstrap & Jinja.
 
 Deployed to AWS using Docker.
-
-
-#### Docker
-
-`sudo docker-compose build`
-`sudo docker-compose up `
