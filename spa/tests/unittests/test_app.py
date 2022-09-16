@@ -10,3 +10,6 @@ class TestViews(TestCase):
 
     def test_that_debug_is_false(self):
         self.assertTrue(settings.DEBUG==False)
+
+    def test_that_key_is_not_none(self):
+        self.assertIsNotNone(settings.SECRET_KEY)
