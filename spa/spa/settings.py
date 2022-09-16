@@ -27,7 +27,7 @@ load_dotenv()
 SECRET_KEY = 'Y8Y*kam2LSRqwncLJm5PFZ%Zw$7HuSMeekd^F$xkD6&LbaVnbc%Rqn@KWkE!f^56LE9%u$G@ngA%qUNzHJaMxk$P9CJFdeBxgECG'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
