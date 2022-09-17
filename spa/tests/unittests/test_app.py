@@ -8,8 +8,11 @@ class TestViews(TestCase):
     def test_that_checks_is_in_app(self):
         self.assertTrue("checks" in settings.INSTALLED_APPS)
 
-    def test_language(self):
+    def test_apps_language(self):
         self.assertEqual('en-us', settings.LANGUAGE_CODE)
+
+    def test_apps_time_zone(self):
+        self.assertEqual('UTC', settings.TIME_ZONE)
 
     # def test_allowed_hosts(self):
     #     self.assertIn("*", settings.ALLOWED_HOSTS)
